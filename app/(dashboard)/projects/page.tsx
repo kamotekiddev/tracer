@@ -10,7 +10,7 @@ function Projects() {
     <main className="p-4 space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-bold">Projects</h1>
-        <Link href="" className={buttonVariants({ size: "sm" })}>
+        <Link href="/projects/new" className={buttonVariants({ size: "sm" })}>
           New Project
         </Link>
       </div>
