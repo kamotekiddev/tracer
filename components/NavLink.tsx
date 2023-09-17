@@ -12,8 +12,8 @@ function NavLink(props: NavlinkProps) {
 
     return (
         <Link
-            className={cn('transition-all font-thin duration-100 ease-linear', {
-                'font-bold': pathname === props.href,
+            className={cn('transition-all duration-100 ease-linear', {
+                'font-semibold': pathname === props.href,
             })}
             {...props}
         >
