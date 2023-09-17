@@ -7,20 +7,21 @@ import {
     FormLabel,
     FormMessage,
 } from '../ui/form';
-import { Input } from '../ui/input';
+import { Input, InputProps } from '../ui/input';
 
 type FormInputProps<T> = {
     control: Control<FieldValues & T>;
     name: Path<FieldValues & T>;
     label?: string;
     description?: string;
-};
+} & InputProps;
 
 function FormInput<T>({
     control,
     name,
     description,
     label,
+    ...props
 }: FormInputProps<T>) {
     return (
         <FormField
@@ -30,7 +31,7 @@ function FormInput<T>({
                 <FormItem>
                     {label && <FormLabel>{label}</FormLabel>}
                     <FormControl>
-                        <Input {...field} />
+                        <Input {...props} {...field} />
                     </FormControl>
                     <FormDescription>{description}</FormDescription>
                     {fieldState.error?.message && (

@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
+import SignInForm from './components/SignInForm';
 
 export default function Home() {
     return (
-        <main className='p-4'>
-            <Button>Button</Button>
+        <main className='p-4 grid place-items-center h-screen'>
+            <SignInForm />
         </main>
     );
 }
