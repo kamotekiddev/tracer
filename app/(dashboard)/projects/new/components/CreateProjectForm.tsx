@@ -1,18 +1,11 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import Link from 'next/link';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, buttonVariants } from '@/components/ui/button';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import FormInput from '@/components/form-elements/FormInput';
 import {
@@ -22,28 +15,19 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import Link from 'next/link';
+import { createProjectSchema } from '@/app/validationSchemas';
 
-const formSchema = z.object({
-    project_name: z.string().min(2, {
-        message: 'This must be at least 2 characters.',
-    }),
-    key: z.string().min(2, {
-        message: 'This must be at least 2 characters.',
-    }),
-});
+type CreateProjectForm = z.infer<typeof createProjectSchema>;
 
-type CreateProjectFormSchema = z.infer<typeof formSchema>;
-
-const defaultValues: CreateProjectFormSchema = {
+const defaultValues: CreateProjectForm = {
     project_name: '',
     key: '',
 };
 
 function CreateProjectForm() {
-    const form = useForm<CreateProjectFormSchema>({
+    const form = useForm<CreateProjectForm>({
         defaultValues,
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(createProjectSchema),
     });
 
     const onSubmit = () => {};
@@ -72,7 +56,7 @@ function CreateProjectForm() {
                         <FormInput
                             label='Key'
                             control={form.control}
-                            name='project_name'
+                            name='key'
                             description='Add acronym of your project name ex. SSWI'
                         />
                         <div className='flex gap-4 justify-end'>
