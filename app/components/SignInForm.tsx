@@ -2,7 +2,9 @@
 
 import * as z from 'zod';
 import Link from 'next/link';
+import { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -14,6 +16,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import FormInput from '@/components/form-elements/FormInput';
 
 const formSchema = z.object({
@@ -29,12 +32,26 @@ const defaultValues: SignInFormSchema = {
 };
 
 function SignInForm() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
+
     const form = useForm<SignInFormSchema>({
         defaultValues,
         resolver: zodResolver(formSchema),
     });
 
-    const onSubmit = () => {};
+    const onSubmit = form.handleSubmit((values) => {
+        setIsLoading(true);
+        signIn('credentials', { ...values, redirect: false })
+            .then((res) => {
+                if (res?.error) setErrorMessage('Invalid username or password');
+                if (res?.ok) router.replace('/home');
+            })
+            .catch(() => setErrorMessage('Internal server error'))
+            .finally(() => setIsLoading(false));
+    });
+
     const handleGoogleSignin = () => signIn('google', { callbackUrl: '/home' });
 
     return (
@@ -56,10 +73,7 @@ function SignInForm() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className='space-y-4'
-                    >
+                    <form onSubmit={onSubmit} className='space-y-4'>
                         <FormInput
                             name='email'
                             label='Email'
@@ -71,7 +85,20 @@ function SignInForm() {
                             type='password'
                             control={form.control}
                         />
-                        <Button type='submit' className='w-full'>
+
+                        {errorMessage && (
+                            <Alert variant='destructive'>
+                                <AlertTitle>An Error Occured</AlertTitle>
+                                <AlertDescription>
+                                    {errorMessage}
+                                </AlertDescription>
+                            </Alert>
+                        )}
+                        <Button
+                            type='submit'
+                            className='w-full'
+                            disabled={isLoading}
+                        >
                             Sign In
                         </Button>
                         <Button
