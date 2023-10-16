@@ -2,6 +2,7 @@
 
 import * as z from 'zod';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -34,6 +35,7 @@ function SignInForm() {
     });
 
     const onSubmit = () => {};
+    const handleGoogleSignin = () => signIn('google', { callbackUrl: '/home' });
 
     return (
         <Form {...form}>
@@ -72,7 +74,12 @@ function SignInForm() {
                         <Button type='submit' className='w-full'>
                             Sign In
                         </Button>
-                        <Button className='w-full' variant='outline'>
+                        <Button
+                            type='button'
+                            onClick={handleGoogleSignin}
+                            className='w-full'
+                            variant='outline'
+                        >
                             Continue with Google
                         </Button>
                     </form>
