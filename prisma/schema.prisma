@@ -21,6 +21,8 @@ model User {
   updatedAt      DateTime  @updatedAt
 
   accounts Account[]
+  projects Project[] @relation("owner")
+  stared   Project[] @relation("starred_by")
 }
 
 model Account {
@@ -40,4 +42,13 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Project {
+  id         String @id @default(uuid())
+  name       String
+  key        String
+  user_id    String
+  owner      User   @relation("owner", fields: [user_id], references: [id])
+  starred_by User[] @relation("starred_by")
 }

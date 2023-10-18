@@ -20,7 +20,7 @@ import { createProjectSchema } from '@/app/validationSchemas';
 type CreateProjectForm = z.infer<typeof createProjectSchema>;
 
 const defaultValues: CreateProjectForm = {
-    project_name: '',
+    name: '',
     key: '',
 };
 
@@ -51,7 +51,7 @@ function CreateProjectForm() {
                         <FormInput
                             label='Project Name'
                             control={form.control}
-                            name='project_name'
+                            name='name'
                         />
                         <FormInput
                             label='Key'
