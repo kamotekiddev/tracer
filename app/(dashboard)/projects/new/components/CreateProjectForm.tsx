@@ -1,13 +1,15 @@
 'use client';
 
 import * as z from 'zod';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import axios, { isAxiosError } from 'axios';
 import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
-import FormInput from '@/components/form-elements/FormInput';
 import {
     Card,
     CardContent,
@@ -15,7 +17,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { createProjectSchema } from '@/app/validationSchemas';
+import FormInput from '@/components/form-elements/FormInput';
 
 type CreateProjectForm = z.infer<typeof createProjectSchema>;
 
@@ -25,12 +29,30 @@ const defaultValues: CreateProjectForm = {
 };
 
 function CreateProjectForm() {
+    const router = useRouter();
+    const [isLoading, setIsloading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
     const form = useForm<CreateProjectForm>({
         defaultValues,
         resolver: zodResolver(createProjectSchema),
     });
 
-    const onSubmit = () => {};
+    const onSubmit = form.handleSubmit(async (values) => {
+        try {
+            setIsloading(true);
+            await axios.post('/api/projects/new', values);
+            form.reset(defaultValues);
+            router.replace('/projects');
+        } catch (error) {
+            if (isAxiosError<string>(error))
+                setErrorMessage(
+                    error.response?.data || 'Internal server error',
+                );
+        } finally {
+            setIsloading(false);
+        }
+    });
 
     return (
         <Form {...form}>
@@ -44,10 +66,7 @@ function CreateProjectForm() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className='space-y-4'
-                    >
+                    <form onSubmit={onSubmit} className='space-y-4'>
                         <FormInput
                             label='Project Name'
                             control={form.control}
@@ -59,6 +78,14 @@ function CreateProjectForm() {
                             name='key'
                             description='Add acronym of your project name ex. SSWI'
                         />
+                        {errorMessage && (
+                            <Alert variant='destructive'>
+                                <AlertTitle>An Error Occured</AlertTitle>
+                                <AlertDescription>
+                                    {errorMessage}
+                                </AlertDescription>
+                            </Alert>
+                        )}
                         <div className='flex gap-4 justify-end'>
                             <Link
                                 href='/projects'
@@ -68,7 +95,9 @@ function CreateProjectForm() {
                             >
                                 Cancel
                             </Link>
-                            <Button type='submit'>Create Project</Button>
+                            <Button type='submit' disabled={isLoading}>
+                                Create Project
+                            </Button>
                         </div>
                     </form>
                 </CardContent>
