@@ -1,9 +1,9 @@
+import Link from 'next/link';
+
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import Link from 'next/link';
-import React from 'react';
-import ProjectsTable from './components/ProjectsTable';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ProjectsTable from './components/ProjectsTable';
 
 function Projects() {
     return (

@@ -45,10 +45,13 @@ model Account {
 }
 
 model Project {
-  id         String @id @default(uuid())
+  id         String   @id @default(uuid())
   name       String
   key        String
   user_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
   owner      User   @relation("owner", fields: [user_id], references: [id])
   starred_by User[] @relation("starred_by")
 }
