@@ -23,6 +23,7 @@ model User {
   accounts Account[]
   projects Project[] @relation("owner")
   stared   Project[] @relation("starred_by")
+  member   Project[] @relation("members")
 }
 
 model Account {
@@ -52,6 +53,7 @@ model Project {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  members    User[] @relation("members")
   owner      User   @relation("owner", fields: [user_id], references: [id])
   starred_by User[] @relation("starred_by")
 }

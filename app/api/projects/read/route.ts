@@ -9,7 +9,7 @@ export async function GET() {
 
     const projects = await client.project.findMany({
         where: { user_id: user.id },
-        include: { owner: true, starred_by: true },
+        include: { owner: true, starred_by: true, members: true },
         orderBy: { created_at: 'desc' },
     });
 

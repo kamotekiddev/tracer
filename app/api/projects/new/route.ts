@@ -24,7 +24,12 @@ export async function POST(req: NextRequest) {
         });
 
     const newProject = await client.project.create({
-        data: { name: body.name, key: body.key, user_id: user.id },
+        data: {
+            name: body.name,
+            key: body.key,
+            user_id: user.id,
+            members: { connect: [{ id: user.id }] },
+        },
     });
 
     return NextResponse.json(newProject);
