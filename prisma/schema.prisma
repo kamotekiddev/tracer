@@ -53,7 +53,20 @@ model Project {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  members    User[] @relation("members")
-  owner      User   @relation("owner", fields: [user_id], references: [id])
-  starred_by User[] @relation("starred_by")
+  members    User[]  @relation("members")
+  owner      User    @relation("owner", fields: [user_id], references: [id])
+  starred_by User[]  @relation("starred_by")
+  issues     Issue[]
+}
+
+model Issue {
+  id      String @id @default(uuid())
+  title   String
+  content String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  project    Project @relation(fields: [project_id], references: [id])
+  project_id String
 }

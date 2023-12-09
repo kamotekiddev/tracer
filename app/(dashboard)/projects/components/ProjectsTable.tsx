@@ -74,7 +74,7 @@ function ProjectsTable() {
                                     <h1>{project.owner.name}</h1>
                                 </div>
                             </TableCell>
-                            <TableCell>20</TableCell>
+                            <TableCell>{project.issues.length}</TableCell>
                             <TableCell className='text-right'>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -92,12 +92,6 @@ function ProjectsTable() {
                                             }
                                         >
                                             Delete Project
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            Update Project
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            Leave Project
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
