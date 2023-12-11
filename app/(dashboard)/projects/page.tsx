@@ -1,11 +1,15 @@
 import Link from 'next/link';
 
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { getProjects } from '@/lib/actions/projects';
 import ProjectsTable from './components/ProjectsTable';
 
-function Projects() {
+async function Projects() {
+    const { data: projects } = await getProjects();
+
     return (
         <main className='p-4 space-y-4'>
             <div className='flex items-center justify-between'>
@@ -21,7 +25,7 @@ function Projects() {
                 <Input placeholder='Search...' />
                 <Input placeholder='Filter...' />
             </div>
-            <ProjectsTable />
+            <ProjectsTable projects={projects} />
             <div className='flex gap-2'>
                 <Button variant='outline' size='icon'>
                     <ChevronLeft className='w-4 h-4' />

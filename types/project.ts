@@ -1,7 +1,7 @@
 import { Issue, Project, User } from '@prisma/client';
 
-export type FullProject = Project & {
+export interface FullProject extends Project {
     owner: User;
     starred_by: User[];
     issues: Issue[];
-};
+}

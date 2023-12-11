@@ -3,7 +3,6 @@
 import * as z from 'zod';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios, { isAxiosError } from 'axios';
 import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -19,6 +18,8 @@ import {
 } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { createProjectSchema } from '@/app/validationSchemas';
+import { createProject } from '@/lib/actions/projects';
+import getErrorMessage from '@/lib/getErrorMessage';
 import FormInput from '@/components/form-elements/FormInput';
 
 type CreateProjectForm = z.infer<typeof createProjectSchema>;
@@ -39,19 +40,15 @@ function CreateProjectForm() {
     });
 
     const onSubmit = form.handleSubmit(async (values) => {
-        try {
-            setIsloading(true);
-            await axios.post('/api/projects/new', values);
-            form.reset(defaultValues);
-            router.replace('/projects');
-        } catch (error) {
-            if (isAxiosError<string>(error))
-                setErrorMessage(
-                    error.response?.data || 'Internal server error',
-                );
-        } finally {
-            setIsloading(false);
-        }
+        setIsloading(true);
+        const { isSuccess, isError, error } = await createProject({
+            ...values,
+            pathToRevalidate: '/projects',
+        });
+        setIsloading(false);
+
+        if (isSuccess) return router.replace('/projects');
+        if (isError) return setErrorMessage(getErrorMessage(error));
     });
 
     return (

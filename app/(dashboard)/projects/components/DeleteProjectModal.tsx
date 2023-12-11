@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -8,7 +9,9 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useDeleteProject } from '@/hooks/useProjects';
+
+import { deleteProject } from '@/lib/actions/projects';
+import getErrorMessage from '@/lib/getErrorMessage';
 
 type DeleteModalProps = {
     idToDelete: string;
@@ -17,7 +20,8 @@ type DeleteModalProps = {
 };
 
 function DeleteProjectModal({ idToDelete, isOpen, onClose }: DeleteModalProps) {
-    const deleteProject = useDeleteProject();
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleClose = (open: boolean) => {
         if (!open) onClose();
@@ -25,8 +29,15 @@ function DeleteProjectModal({ idToDelete, isOpen, onClose }: DeleteModalProps) {
 
     const handleDeleteProject = async () => {
         if (!idToDelete) return;
-        await deleteProject.mutateAsync(idToDelete);
-        onClose();
+        setIsDeleting(true);
+        const { isSuccess, isError, error } = await deleteProject({
+            id: idToDelete,
+            pathToRevalidate: '/projects',
+        });
+        setIsDeleting(false);
+
+        if (isSuccess) onClose();
+        if (isError) setErrorMessage(getErrorMessage(error));
     };
 
     return (
@@ -40,16 +51,14 @@ function DeleteProjectModal({ idToDelete, isOpen, onClose }: DeleteModalProps) {
                         servers.
                     </DialogDescription>
                 </DialogHeader>
-                {deleteProject.isError && (
+                {!!errorMessage && (
                     <Alert variant='destructive'>
-                        <AlertDescription>
-                            {deleteProject.error?.response?.data as string}
-                        </AlertDescription>
+                        <AlertDescription>{errorMessage}</AlertDescription>
                     </Alert>
                 )}
                 <DialogFooter>
                     <Button
-                        disabled={deleteProject.isLoading}
+                        disabled={isDeleting}
                         variant='destructive'
                         onClick={handleDeleteProject}
                     >

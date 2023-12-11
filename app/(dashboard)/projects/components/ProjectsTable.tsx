@@ -20,12 +20,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-import { useGetProjects } from '@/hooks/useProjects';
+import { FullProject } from '@/types/project';
 import DeleteProjectModal from './DeleteProjectModal';
 
-function ProjectsTable() {
-    const { data: projects } = useGetProjects();
+type ProjectsTableProps = { projects?: FullProject[] };
 
+function ProjectsTable({ projects = [] }: ProjectsTableProps) {
     const [deleteProjectModal, setDeleteProjectModal] = useState({
         isOpen: false,
         idToDelete: '',
@@ -47,7 +47,7 @@ function ProjectsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {projects?.data?.map((project) => (
+                    {projects?.map((project) => (
                         <TableRow key={project.id}>
                             <TableCell className='font-medium'>
                                 <Star className='h-4 w-4' />
