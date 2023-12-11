@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { createProjectSchema } from '@/app/validationSchemas';
-import { createProject } from '@/lib/actions/projects';
+import { createProject } from '@/lib/actions/projects.action';
 import getErrorMessage from '@/lib/getErrorMessage';
 import FormInput from '@/components/form-elements/FormInput';
 

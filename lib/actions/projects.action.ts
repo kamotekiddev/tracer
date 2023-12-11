@@ -33,6 +33,28 @@ export const getProjects = async () => {
     }
 };
 
+export const getProjectById = async (id: string) => {
+    try {
+        const user = await getCurrentUser();
+
+        if (!user) throw new Error('Unauthorized');
+
+        const project = await client.project.findUnique({
+            where: { id },
+            include: {
+                owner: true,
+                starred_by: true,
+                members: true,
+                issues: true,
+            },
+        });
+
+        return { isSuccess: true, data: project };
+    } catch (error) {
+        return { isError: true, error };
+    }
+};
+
 export const deleteProject = async ({
     id,
     pathToRevalidate,

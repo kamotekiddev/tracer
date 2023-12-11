@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { getProjects } from '@/lib/actions/projects';
+import { getProjects } from '@/lib/actions/projects.action';
 import ProjectsTable from './components/ProjectsTable';
 
 async function Projects() {

@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
-import { deleteProject } from '@/lib/actions/projects';
+import { deleteProject } from '@/lib/actions/projects.action';
 import getErrorMessage from '@/lib/getErrorMessage';
 
 type DeleteModalProps = {
