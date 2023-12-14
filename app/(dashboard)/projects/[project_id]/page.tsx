@@ -22,7 +22,7 @@ async function ProjectDetails({ params }: ProjectDetailProps) {
                 <span className='text-black/70'>{project?.key}</span>
             </header>
             <section>
-                <Boards boards={project?.statuses} />
+                <Boards boards={project?.boards} />
             </section>
         </main>
     );

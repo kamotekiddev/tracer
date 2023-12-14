@@ -10,8 +10,8 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-import { createStatusSchema } from '@/app/validationSchemas';
-import { createStatus } from '@/lib/actions/status.action';
+import { createBoardSchema } from '@/app/validationSchemas';
+import { createBoard } from '@/lib/actions/board.action';
 import getErrorMessage from '@/lib/getErrorMessage';
 import FormInput from '@/components/form-elements/FormInput';
 
@@ -35,8 +35,8 @@ function CreateBoardModal() {
     );
 }
 
-type CreateBoardFormFields = z.infer<typeof createStatusSchema>;
-const defaultValues: CreateBoardFormFields = { project_id: '', status: '' };
+type CreateBoardFormFields = z.infer<typeof createBoardSchema>;
+const defaultValues: CreateBoardFormFields = { project_id: '', name: '' };
 
 interface CreateBoardFormProps {
     onSuccess: () => void;
@@ -51,12 +51,12 @@ function CreateBoardForm({ onSuccess }: CreateBoardFormProps) {
             ...defaultValues,
             project_id: project_id as string,
         },
-        resolver: zodResolver(createStatusSchema),
+        resolver: zodResolver(createBoardSchema),
     });
 
     const handleSubmit = form.handleSubmit(async (values) => {
         setIsLoading(true);
-        const { isSuccess, isError, error } = await createStatus({
+        const { isSuccess, isError, error } = await createBoard({
             pathToRevalidate: '/projects/[project_id]',
             ...values,
         });
@@ -78,7 +78,7 @@ function CreateBoardForm({ onSuccess }: CreateBoardFormProps) {
                 <div className='space-y-4'>
                     <FormInput
                         control={form.control}
-                        name='status'
+                        name='name'
                         label='Board Name'
                     />
                 </div>

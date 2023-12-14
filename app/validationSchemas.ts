@@ -31,7 +31,7 @@ export const createProjectSchema = z.object({
     }),
 });
 
-export const createStatusSchema = z.object({
+export const createBoardSchema = z.object({
     project_id: z.string(),
-    status: z.string(),
+    name: z.string(),
 });

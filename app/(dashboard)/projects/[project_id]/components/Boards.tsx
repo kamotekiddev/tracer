@@ -1,8 +1,8 @@
-import { Status } from '@prisma/client';
+import { Board } from '@prisma/client';
 import CreateBoardModal from './CreateBoardModal';
 
 interface BoardsProps {
-    boards?: Status[];
+    boards?: Board[];
 }
 function Boards({ boards = [] }: BoardsProps) {
     return (
