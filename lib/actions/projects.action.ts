@@ -46,6 +46,7 @@ export const getProjectById = async (id: string) => {
                 starred_by: true,
                 members: true,
                 issues: true,
+                statuses: true,
             },
         });
 

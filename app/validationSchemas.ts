@@ -30,3 +30,8 @@ export const createProjectSchema = z.object({
         message: 'Key must be at least 2 characters.',
     }),
 });
+
+export const createStatusSchema = z.object({
+    project_id: z.string(),
+    status: z.string(),
+});

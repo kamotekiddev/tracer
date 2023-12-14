@@ -53,10 +53,22 @@ model Project {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  members    User[]  @relation("members")
-  owner      User    @relation("owner", fields: [user_id], references: [id])
-  starred_by User[]  @relation("starred_by")
+  members    User[]   @relation("members")
+  owner      User     @relation("owner", fields: [user_id], references: [id])
+  starred_by User[]   @relation("starred_by")
   issues     Issue[]
+  statuses   Status[]
+}
+
+model Status {
+  id         String   @id @default(uuid())
+  status     String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  issues     Issue[]
+
+  project    Project @relation(fields: [project_id], references: [id])
+  project_id String
 }
 
 model Issue {
@@ -67,6 +79,8 @@ model Issue {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  status     Status  @relation(fields: [status_id], references: [id])
+  status_id  String
   project    Project @relation(fields: [project_id], references: [id])
   project_id String
 }
