@@ -3,10 +3,16 @@
 import { z } from 'zod';
 import client from '@/prisma/client';
 import { createStatusSchema } from '@/app/validationSchemas';
+import { revalidatePath } from 'next/cache';
 
-type CreateStatusParams = z.infer<typeof createStatusSchema>;
+type CreateStatusParams = z.infer<typeof createStatusSchema> & {
+    pathToRevalidate: string;
+};
 
-export const createStatus = async (params: CreateStatusParams) => {
+export const createStatus = async ({
+    pathToRevalidate,
+    ...params
+}: CreateStatusParams) => {
     try {
         const validation = createStatusSchema.safeParse(params);
 
@@ -29,6 +35,8 @@ export const createStatus = async (params: CreateStatusParams) => {
         const newStatus = await client.status.create({
             data: { status: params.status, project_id: params.project_id },
         });
+
+        revalidatePath(pathToRevalidate);
 
         return { isSuccess: true, data: newStatus };
     } catch (error) {

@@ -1,9 +1,17 @@
+import { Status } from '@prisma/client';
 import CreateBoardModal from './CreateBoardModal';
 
-function Boards() {
+interface BoardsProps {
+    boards?: Status[];
+}
+function Boards({ boards = [] }: BoardsProps) {
     return (
         <div className='flex gap-4 h-full'>
             <CreateBoardModal />
+
+            {boards.map((board) => (
+                <pre key={board.id}>{JSON.stringify(board, null, 2)}</pre>
+            ))}
         </div>
     );
 }

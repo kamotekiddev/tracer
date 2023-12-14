@@ -56,7 +56,10 @@ function CreateBoardForm({ onSuccess }: CreateBoardFormProps) {
 
     const handleSubmit = form.handleSubmit(async (values) => {
         setIsLoading(true);
-        const { isSuccess, isError, error } = await createStatus(values);
+        const { isSuccess, isError, error } = await createStatus({
+            pathToRevalidate: '/projects/[project_id]',
+            ...values,
+        });
         setIsLoading(false);
 
         if (isSuccess) onSuccess();
