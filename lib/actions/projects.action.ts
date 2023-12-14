@@ -105,6 +105,23 @@ export const createProject = async (
             },
         });
 
+        if (!newProject)
+            return { isError: false, error: 'Failed to create project' };
+
+        const boards = await client.board.createMany({
+            data: [
+                { name: 'TODO', project_id: newProject?.id },
+                { name: 'ONGOING', project_id: newProject?.id },
+                { name: 'DONE', project_id: newProject?.id },
+            ],
+        });
+
+        if (!boards)
+            return {
+                isError: true,
+                error: 'Failed to create the default boards',
+            };
+
         revalidatePath(params.pathToRevalidate);
 
         return { isSuccess: true, data: newProject };
