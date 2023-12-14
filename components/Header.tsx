@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
 import NavLink from './NavLink';

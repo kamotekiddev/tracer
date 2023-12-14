@@ -23,10 +23,15 @@ export const signUpSchema = z
     });
 
 export const createProjectSchema = z.object({
-    project_name: z.string().min(2, {
-        message: 'This must be at least 2 characters.',
+    name: z.string().min(2, {
+        message: 'Name must be at least 2 characters.',
     }),
     key: z.string().min(2, {
-        message: 'This must be at least 2 characters.',
+        message: 'Key must be at least 2 characters.',
     }),
+});
+
+export const createStatusSchema = z.object({
+    project_id: z.string(),
+    status: z.string(),
 });
