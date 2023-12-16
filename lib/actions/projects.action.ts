@@ -22,7 +22,7 @@ export const getProjects = async () => {
                 owner: true,
                 starred_by: true,
                 members: true,
-                issues: true,
+                tickets: true,
             },
             orderBy: { created_at: 'desc' },
         });
@@ -45,8 +45,10 @@ export const getProjectById = async (id: string) => {
                 owner: true,
                 starred_by: true,
                 members: true,
-                issues: true,
-                boards: true,
+                tickets: true,
+                boards: {
+                    include: { tickets: true },
+                },
             },
         });
 

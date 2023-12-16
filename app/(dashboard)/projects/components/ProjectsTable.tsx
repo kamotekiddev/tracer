@@ -74,7 +74,7 @@ function ProjectsTable({ projects = [] }: ProjectsTableProps) {
                                     <h1>{project.owner.name}</h1>
                                 </div>
                             </TableCell>
-                            <TableCell>{project.issues.length}</TableCell>
+                            <TableCell>{project.tickets.length}</TableCell>
                             <TableCell className='text-right'>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>

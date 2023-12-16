@@ -13,7 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { createBoardSchema } from '@/app/validationSchemas';
 import { createBoard } from '@/lib/actions/board.action';
 import getErrorMessage from '@/lib/getErrorMessage';
-import FormInput from '@/components/form-elements/FormInput';
+import { FormInput } from '@/components/form-elements';
 
 function CreateBoardModal() {
     const [isOpen, setIsOpen] = useState(false);

@@ -53,10 +53,10 @@ model Project {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  members    User[]  @relation("members")
-  owner      User    @relation("owner", fields: [user_id], references: [id])
-  starred_by User[]  @relation("starred_by")
-  issues     Issue[]
+  members    User[]   @relation("members")
+  owner      User     @relation("owner", fields: [user_id], references: [id])
+  starred_by User[]   @relation("starred_by")
+  tickets    Ticket[]
   boards     Board[]
 }
 
@@ -65,13 +65,13 @@ model Board {
   name       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  issues     Issue[]
+  tickets    Ticket[]
 
   project    Project @relation(fields: [project_id], references: [id])
   project_id String
 }
 
-model Issue {
+model Ticket {
   id      String @id @default(uuid())
   title   String
   content String
