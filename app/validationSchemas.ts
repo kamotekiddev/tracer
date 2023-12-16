@@ -36,7 +36,7 @@ export const createBoardSchema = z.object({
     name: z.string(),
 });
 
-export const createIssueSchema = z.object({
+export const createTicketSchema = z.object({
     title: z.string(),
     board_id: z.string(),
     content: z.string(),

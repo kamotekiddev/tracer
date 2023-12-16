@@ -16,14 +16,14 @@ import {
     FormSelectInput,
 } from '@/components/form-elements';
 import getErrorMessage from '@/lib/getErrorMessage';
-import { createIssueSchema } from '@/app/validationSchemas';
+import { createTicketSchema } from '@/app/validationSchemas';
 import { createTicket } from '@/lib/actions/ticket.action';
 
-interface CreateIssueModalProps {
+interface CreateTicketModalProps {
     boards?: Board[];
 }
 
-function CreateIssueModal({ boards = [] }: CreateIssueModalProps) {
+function CreateTicketModal({ boards = [] }: CreateTicketModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -31,7 +31,7 @@ function CreateIssueModal({ boards = [] }: CreateIssueModalProps) {
                 <Button>Create Issue</Button>
             </DialogTrigger>
             <DialogContent>
-                <CreateIssueForm
+                <CreateTicketForm
                     boards={boards}
                     onClose={() => setIsOpen(false)}
                 />
@@ -40,9 +40,9 @@ function CreateIssueModal({ boards = [] }: CreateIssueModalProps) {
     );
 }
 
-type CreateIssueFormFields = z.infer<typeof createIssueSchema>;
+type CreateTicketFormFields = z.infer<typeof createTicketSchema>;
 
-const defaultValues: CreateIssueFormFields = {
+const defaultValues: CreateTicketFormFields = {
     title: '',
     board_id: '',
     content: '',
@@ -54,7 +54,7 @@ interface CreateIssueFormProps {
     onClose: () => void;
 }
 
-function CreateIssueForm({ boards, onClose }: CreateIssueFormProps) {
+function CreateTicketForm({ boards, onClose }: CreateIssueFormProps) {
     const { project_id } = useParams();
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -64,9 +64,9 @@ function CreateIssueForm({ boards, onClose }: CreateIssueFormProps) {
         value: board.id,
     }));
 
-    const form = useForm<CreateIssueFormFields>({
+    const form = useForm<CreateTicketFormFields>({
         defaultValues,
-        resolver: zodResolver(createIssueSchema),
+        resolver: zodResolver(createTicketSchema),
     });
 
     const handleSubmit = form.handleSubmit(async (values) => {
@@ -128,4 +128,4 @@ function CreateIssueForm({ boards, onClose }: CreateIssueFormProps) {
     );
 }
 
-export default CreateIssueModal;
+export default CreateTicketModal;

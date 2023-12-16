@@ -1,7 +1,6 @@
 import { getProjectById } from '@/lib/actions/projects.action';
 import Boards from './components/Boards';
-import { Button } from '@/components/ui/button';
-import CreateIssueModal from './components/CreateIssueModal';
+import CreateTicketModal from './components/CreateTicketModal';
 
 interface Params {
     project_id: string;
@@ -21,7 +20,7 @@ async function ProjectDetails({ params }: ProjectDetailProps) {
         <main className='p-4 grid grid-rows-[auto_1fr] gap-4'>
             <header className='flex gap-4 items-center justify-between'>
                 <h1 className='text-3xl font-bold'>{project?.name}</h1>
-                <CreateIssueModal boards={project?.boards} />
+                <CreateTicketModal boards={project?.boards} />
             </header>
             <section>
                 <Boards boards={project?.boards} />

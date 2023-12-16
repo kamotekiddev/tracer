@@ -1,11 +1,11 @@
 'use server';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { createIssueSchema } from '@/app/validationSchemas';
+import { createTicketSchema } from '@/app/validationSchemas';
 import client from '@/prisma/client';
 import getCurrentUser from '../getCurrentUser';
 
-interface CreateTicketParams extends z.infer<typeof createIssueSchema> {
+interface CreateTicketParams extends z.infer<typeof createTicketSchema> {
     pathToRevalidate: string;
 }
 
@@ -20,7 +20,7 @@ export const createTicket = async ({
         const user = await getCurrentUser();
         if (!user) return { isError: true, error: 'Unauthorized' };
 
-        const validation = createIssueSchema.safeParse({
+        const validation = createTicketSchema.safeParse({
             board_id,
             content,
             title,
