@@ -10,28 +10,28 @@ import { Form } from '@/components/ui/form';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
+import { createTicketSchema } from '@/app/validationSchemas';
+import { createTicket } from '@/lib/actions/ticket.action';
 import {
     FormInput,
     FormTextAreaInput,
     FormSelectInput,
 } from '@/components/form-elements';
 import getErrorMessage from '@/lib/getErrorMessage';
-import { createIssueSchema } from '@/app/validationSchemas';
-import { createTicket } from '@/lib/actions/ticket.action';
 
-interface CreateIssueModalProps {
+interface CreateTicketModalProps {
     boards?: Board[];
 }
 
-function CreateIssueModal({ boards = [] }: CreateIssueModalProps) {
+function CreateTicketModal({ boards = [] }: CreateTicketModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <Button>Create Issue</Button>
+                <Button>Create Ticket</Button>
             </DialogTrigger>
             <DialogContent>
-                <CreateIssueForm
+                <CreateTicketForm
                     boards={boards}
                     onClose={() => setIsOpen(false)}
                 />
@@ -40,9 +40,9 @@ function CreateIssueModal({ boards = [] }: CreateIssueModalProps) {
     );
 }
 
-type CreateIssueFormFields = z.infer<typeof createIssueSchema>;
+type CreateTicketFormFields = z.infer<typeof createTicketSchema>;
 
-const defaultValues: CreateIssueFormFields = {
+const defaultValues: CreateTicketFormFields = {
     title: '',
     board_id: '',
     content: '',
@@ -54,7 +54,7 @@ interface CreateIssueFormProps {
     onClose: () => void;
 }
 
-function CreateIssueForm({ boards, onClose }: CreateIssueFormProps) {
+function CreateTicketForm({ boards, onClose }: CreateIssueFormProps) {
     const { project_id } = useParams();
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -64,9 +64,9 @@ function CreateIssueForm({ boards, onClose }: CreateIssueFormProps) {
         value: board.id,
     }));
 
-    const form = useForm<CreateIssueFormFields>({
+    const form = useForm<CreateTicketFormFields>({
         defaultValues,
-        resolver: zodResolver(createIssueSchema),
+        resolver: zodResolver(createTicketSchema),
     });
 
     const handleSubmit = form.handleSubmit(async (values) => {
@@ -83,16 +83,11 @@ function CreateIssueForm({ boards, onClose }: CreateIssueFormProps) {
         if (isError) setErrorMessage(getErrorMessage(error));
     });
 
-    // TODO rename board into BoardColumn at prisma model and all of its instance
-    // TODO use the barrel import on all of the components who uses the form elements
-    // TODO use a rich text editor on boardcolumn issue
-    // TODO able to assign a issue
-
     return (
         <Form {...form}>
             <form onSubmit={handleSubmit} className='space-y-4'>
                 <div>
-                    <h1 className='text-2xl font-bold'>Create Issue</h1>
+                    <h1 className='text-2xl font-bold'>Create Ticket</h1>
                 </div>
                 <div>
                     <FormInput
@@ -128,4 +123,4 @@ function CreateIssueForm({ boards, onClose }: CreateIssueFormProps) {
     );
 }
 
-export default CreateIssueModal;
+export default CreateTicketModal;
