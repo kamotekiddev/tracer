@@ -6,7 +6,7 @@ type LayoutProps = {
 };
 function Layout({ children }: LayoutProps) {
     return (
-        <section className='h-screen grid grid-rows-[auto_1fr]'>
+        <section className='h-screen max-w-7xl mx-auto grid grid-rows-[auto_1fr]'>
             <Header />
             {children}
         </section>
