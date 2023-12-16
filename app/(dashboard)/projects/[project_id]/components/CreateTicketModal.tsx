@@ -12,12 +12,12 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 import { createTicketSchema } from '@/app/validationSchemas';
 import { createTicket } from '@/lib/actions/ticket.action';
+import getErrorMessage from '@/lib/getErrorMessage';
 import {
     FormInput,
     FormTextAreaInput,
     FormSelectInput,
 } from '@/components/form-elements';
-import getErrorMessage from '@/lib/getErrorMessage';
 
 interface CreateTicketModalProps {
     boards?: Board[];
