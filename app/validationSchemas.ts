@@ -35,3 +35,10 @@ export const createBoardSchema = z.object({
     project_id: z.string(),
     name: z.string(),
 });
+
+export const createIssueSchema = z.object({
+    title: z.string(),
+    board_id: z.string(),
+    content: z.string(),
+    project_id: z.string(),
+});
