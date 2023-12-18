@@ -13,6 +13,7 @@ export const createTicket = async ({
     board_id,
     content,
     title,
+    type,
     project_id,
     pathToRevalidate,
 }: CreateTicketParams) => {
@@ -24,6 +25,7 @@ export const createTicket = async ({
             board_id,
             content,
             title,
+            type,
             project_id,
         });
 
@@ -48,6 +50,7 @@ export const createTicket = async ({
                 board_id,
                 content,
                 title,
+                type,
                 project_id,
             },
         });

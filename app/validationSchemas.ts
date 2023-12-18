@@ -41,4 +41,5 @@ export const createTicketSchema = z.object({
     board_id: z.string(),
     content: z.string(),
     project_id: z.string(),
+    type: z.string(),
 });

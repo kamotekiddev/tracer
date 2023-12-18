@@ -46,6 +46,7 @@ const defaultValues: CreateTicketFormFields = {
     title: '',
     board_id: '',
     content: '',
+    type: 'issue',
     project_id: '',
 };
 
@@ -65,7 +66,7 @@ function CreateTicketForm({ boards, onClose }: CreateIssueFormProps) {
     }));
 
     const form = useForm<CreateTicketFormFields>({
-        defaultValues,
+        defaultValues: { ...defaultValues, board_id: boardOptions[0].value },
         resolver: zodResolver(createTicketSchema),
     });
 
@@ -92,8 +93,18 @@ function CreateTicketForm({ boards, onClose }: CreateIssueFormProps) {
                 <div>
                     <FormInput
                         name='title'
-                        label='Issue'
+                        label='Title'
                         control={form.control}
+                    />
+                    <FormSelectInput
+                        name='type'
+                        label='Type'
+                        control={form.control}
+                        data={[
+                            { label: 'Issue', value: 'issue' },
+                            { label: 'Bug', value: 'bug' },
+                            { label: 'Task', value: 'task' },
+                        ]}
                     />
                     <FormSelectInput
                         name='board_id'
