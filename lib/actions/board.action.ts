@@ -4,9 +4,26 @@ import { z } from 'zod';
 import client from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
 import { createBoardSchema } from '@/app/validationSchemas';
+import getCurrentUser from '../getCurrentUser';
 
 type CreateBoardParams = z.infer<typeof createBoardSchema> & {
     pathToRevalidate: string;
+};
+
+export const getBoardsByProjectId = async (project_id: string) => {
+    try {
+        const user = await getCurrentUser();
+        if (!user) return { isError: true, error: 'Unauthorized' };
+
+        const boards = await client.board.findMany({ where: { project_id } });
+
+        return { isSuccess: true, data: boards };
+    } catch (error) {
+        return {
+            isError: true,
+            error: 'Something went wrong, Please try again later.',
+        };
+    }
 };
 
 export const createBoard = async ({

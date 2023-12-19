@@ -131,3 +131,22 @@ export const createProject = async (
         return { isError: true, error };
     }
 };
+
+export const getProjectMembers = async (project_id: string) => {
+    try {
+        const user = await getCurrentUser();
+
+        if (!user) return { isError: true, error: 'Unauthorized' };
+
+        const members = await client.user.findMany({
+            where: { projects: { some: { id: project_id } } },
+        });
+
+        return { isSuccess: true, data: members };
+    } catch (error) {
+        return {
+            isError: true,
+            error: 'Something went wrong, Please try again later.',
+        };
+    }
+};
