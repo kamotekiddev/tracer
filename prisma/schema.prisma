@@ -24,6 +24,7 @@ model User {
   projects Project[] @relation("owner")
   stared   Project[] @relation("starred_by")
   member   Project[] @relation("members")
+  tickets  Ticket[]
 }
 
 model Account {
@@ -79,6 +80,9 @@ model Ticket {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  assignee    User?   @relation(fields: [assignee_id], references: [id])
+  assignee_id String?
 
   status     Status  @relation(fields: [status_id], references: [id])
   status_id  String

@@ -65,3 +65,34 @@ export const createTicket = async ({
         };
     }
 };
+
+interface ReAssignTicketParams {
+    ticket_id: string;
+    assignee_id: string;
+    pathToRevalidate: string;
+}
+
+export const reAssignTicket = async ({
+    ticket_id,
+    assignee_id,
+    pathToRevalidate,
+}: ReAssignTicketParams) => {
+    try {
+        const user = await getCurrentUser();
+        if (!user) return { isError: true, error: 'Unauthorized' };
+
+        const updatedTicket = await client.ticket.update({
+            where: { id: ticket_id },
+            data: { assignee_id },
+        });
+
+        revalidatePath(pathToRevalidate);
+
+        return { isSuccess: true, data: updatedTicket };
+    } catch (error) {
+        return {
+            isError: true,
+            error: 'Something went wrong, Please try again later.',
+        };
+    }
+};

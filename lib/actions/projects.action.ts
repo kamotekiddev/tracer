@@ -47,7 +47,7 @@ export const getProjectById = async (id: string) => {
                 members: true,
                 tickets: true,
                 statuses: {
-                    include: { tickets: true },
+                    include: { tickets: { include: { assignee: true } } },
                 },
             },
         });
