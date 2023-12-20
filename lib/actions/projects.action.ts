@@ -46,7 +46,7 @@ export const getProjectById = async (id: string) => {
                 starred_by: true,
                 members: true,
                 tickets: true,
-                boards: {
+                statuses: {
                     include: { tickets: true },
                 },
             },
@@ -110,11 +110,12 @@ export const createProject = async (
         if (!newProject)
             return { isError: false, error: 'Failed to create project' };
 
-        const boards = await client.board.createMany({
+        const boards = await client.status.createMany({
             data: [
-                { name: 'TODO', project_id: newProject?.id },
-                { name: 'ONGOING', project_id: newProject?.id },
-                { name: 'DONE', project_id: newProject?.id },
+                { name: 'Todo', project_id: newProject?.id },
+                { name: 'Ongoing', project_id: newProject?.id },
+                { name: 'For Testing', project_id: newProject?.id },
+                { name: 'Done', project_id: newProject?.id },
             ],
         });
 

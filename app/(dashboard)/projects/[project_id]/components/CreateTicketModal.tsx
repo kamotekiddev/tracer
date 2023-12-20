@@ -2,7 +2,7 @@
 import { z } from 'zod';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { Board } from '@prisma/client';
+import { Status } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -20,10 +20,10 @@ import {
 } from '@/components/form-elements';
 
 interface CreateTicketModalProps {
-    boards?: Board[];
+    statuses?: Status[];
 }
 
-function CreateTicketModal({ boards = [] }: CreateTicketModalProps) {
+function CreateTicketModal({ statuses = [] }: CreateTicketModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -32,7 +32,7 @@ function CreateTicketModal({ boards = [] }: CreateTicketModalProps) {
             </DialogTrigger>
             <DialogContent>
                 <CreateTicketForm
-                    boards={boards}
+                    statuses={statuses}
                     onClose={() => setIsOpen(false)}
                 />
             </DialogContent>
@@ -44,29 +44,29 @@ type CreateTicketFormFields = z.infer<typeof createTicketSchema>;
 
 const defaultValues: CreateTicketFormFields = {
     title: '',
-    board_id: '',
+    status_id: '',
     content: '',
     type: 'issue',
     project_id: '',
 };
 
 interface CreateIssueFormProps {
-    boards: Board[];
+    statuses: Status[];
     onClose: () => void;
 }
 
-function CreateTicketForm({ boards, onClose }: CreateIssueFormProps) {
+function CreateTicketForm({ statuses, onClose }: CreateIssueFormProps) {
     const { project_id } = useParams();
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const boardOptions = boards.map((board) => ({
-        label: board.name,
-        value: board.id,
+    const statusOptions = statuses.map(({ name, id }) => ({
+        label: name,
+        value: id,
     }));
 
     const form = useForm<CreateTicketFormFields>({
-        defaultValues: { ...defaultValues, board_id: boardOptions[0].value },
+        defaultValues: { ...defaultValues, status_id: statusOptions[0].value },
         resolver: zodResolver(createTicketSchema),
     });
 
@@ -107,10 +107,10 @@ function CreateTicketForm({ boards, onClose }: CreateIssueFormProps) {
                         ]}
                     />
                     <FormSelectInput
-                        name='board_id'
-                        label='Board'
+                        name='status_id'
+                        label='Status'
                         control={form.control}
-                        data={boardOptions}
+                        data={statusOptions}
                     />
                     <FormTextAreaInput
                         control={form.control}

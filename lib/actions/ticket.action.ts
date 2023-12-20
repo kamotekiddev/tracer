@@ -10,7 +10,7 @@ interface CreateTicketParams extends z.infer<typeof createTicketSchema> {
 }
 
 export const createTicket = async ({
-    board_id,
+    status_id,
     content,
     title,
     type,
@@ -22,7 +22,7 @@ export const createTicket = async ({
         if (!user) return { isError: true, error: 'Unauthorized' };
 
         const validation = createTicketSchema.safeParse({
-            board_id,
+            status_id,
             content,
             title,
             type,
@@ -36,7 +36,7 @@ export const createTicket = async ({
             };
 
         const existingTicket = await client.ticket.findFirst({
-            where: { title, board_id },
+            where: { title, status_id },
         });
 
         if (existingTicket)
@@ -47,7 +47,7 @@ export const createTicket = async ({
 
         const newTicket = await client.ticket.create({
             data: {
-                board_id,
+                status_id,
                 content,
                 title,
                 type,

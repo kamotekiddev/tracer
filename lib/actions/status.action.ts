@@ -3,19 +3,19 @@
 import { z } from 'zod';
 import client from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
-import { createBoardSchema } from '@/app/validationSchemas';
+import { createStatusSchema } from '@/app/validationSchemas';
 import getCurrentUser from '../getCurrentUser';
 
-type CreateBoardParams = z.infer<typeof createBoardSchema> & {
+type CreateStatusParams = z.infer<typeof createStatusSchema> & {
     pathToRevalidate: string;
 };
 
-export const getBoardsByProjectId = async (project_id: string) => {
+export const getStatusById = async (project_id: string) => {
     try {
         const user = await getCurrentUser();
         if (!user) return { isError: true, error: 'Unauthorized' };
 
-        const boards = await client.board.findMany({ where: { project_id } });
+        const boards = await client.status.findMany({ where: { project_id } });
 
         return { isSuccess: true, data: boards };
     } catch (error) {
@@ -26,12 +26,12 @@ export const getBoardsByProjectId = async (project_id: string) => {
     }
 };
 
-export const createBoard = async ({
+export const createNewStatus = async ({
     pathToRevalidate,
     ...params
-}: CreateBoardParams) => {
+}: CreateStatusParams) => {
     try {
-        const validation = createBoardSchema.safeParse(params);
+        const validation = createStatusSchema.safeParse(params);
 
         if (!validation.success)
             return {
@@ -39,7 +39,7 @@ export const createBoard = async ({
                 error: 'Something went wrong while validating the fields.',
             };
 
-        const existingBoard = await client.board.findFirst({
+        const existingBoard = await client.status.findFirst({
             where: { project_id: params.project_id, name: params.name },
         });
 
@@ -49,7 +49,7 @@ export const createBoard = async ({
                 error: 'Board already exist inside the project.',
             };
 
-        const newBoard = await client.board.create({
+        const newBoard = await client.status.create({
             data: { name: params.name, project_id: params.project_id },
         });
 

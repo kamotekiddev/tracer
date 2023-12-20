@@ -57,10 +57,10 @@ model Project {
   owner      User     @relation("owner", fields: [user_id], references: [id])
   starred_by User[]   @relation("starred_by")
   tickets    Ticket[]
-  boards     Board[]
+  statuses   Status[]
 }
 
-model Board {
+model Status {
   id         String   @id @default(uuid())
   name       String
   created_at DateTime @default(now())
@@ -80,8 +80,8 @@ model Ticket {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  board      Board   @relation(fields: [board_id], references: [id])
-  board_id   String
+  status     Status  @relation(fields: [status_id], references: [id])
+  status_id  String
   project    Project @relation(fields: [project_id], references: [id])
   project_id String
 }

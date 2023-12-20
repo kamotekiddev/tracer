@@ -16,28 +16,28 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
-import { getBoardsByProjectId } from '@/lib/actions/board.action';
+import { getStatusById } from '@/lib/actions/status.action';
 import { getProjectMembers } from '@/lib/actions/projects.action';
-import { FullBoard } from '@/types/board';
-import CreateBoardModal from './CreateBoardModal';
+import { FullStatus } from '@/types/status';
+import CreateStatusModal from './CreateStatusModal';
 
 interface BoardsProps {
-    boards?: FullBoard[];
+    statuses?: FullStatus[];
 }
-function Boards({ boards = [] }: BoardsProps) {
+function Boards({ statuses = [] }: BoardsProps) {
     return (
         <div className='flex gap-4 h-full'>
-            <CreateBoardModal />
+            <CreateStatusModal />
 
-            {boards.map((board) => (
-                <BoardItem key={board.id} board={board} />
+            {statuses.map((status) => (
+                <BoardItem key={status.id} board={status} />
             ))}
         </div>
     );
 }
 
 interface BoardProps {
-    board: FullBoard;
+    board: FullStatus;
 }
 
 function BoardItem({ board }: BoardProps) {
@@ -88,7 +88,7 @@ interface ViewTicketModalProps extends PropsWithChildren {
 }
 
 async function ViewTicketModal({ children, ticket }: ViewTicketModalProps) {
-    const { data: boards } = await getBoardsByProjectId(ticket.project_id);
+    const { data: boards } = await getStatusById(ticket.project_id);
     const { data: members } = await getProjectMembers(ticket.project_id);
 
     return (
@@ -110,7 +110,7 @@ async function ViewTicketModal({ children, ticket }: ViewTicketModalProps) {
                     <h2 className='font-medium text-lg'>Details</h2>
                     <div className='grid grid-cols-[minmax(50px,_1fr)_1fr] items-center'>
                         <label>Status:</label>
-                        <Select value={ticket.board_id}>
+                        <Select value={ticket.status_id}>
                             <SelectTrigger className='h-auto border-none focus:ring-0'>
                                 <SelectValue placeholder='Select Board' />
                             </SelectTrigger>

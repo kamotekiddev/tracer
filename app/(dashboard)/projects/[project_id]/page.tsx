@@ -20,10 +20,10 @@ async function ProjectDetails({ params }: ProjectDetailProps) {
         <main className='p-4 grid grid-rows-[auto_1fr] gap-4'>
             <header className='flex gap-4 items-center justify-between'>
                 <h1 className='text-3xl font-bold'>{project?.name}</h1>
-                <CreateTicketModal boards={project?.boards} />
+                <CreateTicketModal statuses={project?.statuses} />
             </header>
             <section>
-                <Boards boards={project?.boards} />
+                <Boards statuses={project?.statuses} />
             </section>
         </main>
     );

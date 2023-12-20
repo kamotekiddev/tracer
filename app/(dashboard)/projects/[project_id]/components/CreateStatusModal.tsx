@@ -10,12 +10,12 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-import { createBoardSchema } from '@/app/validationSchemas';
-import { createBoard } from '@/lib/actions/board.action';
+import { createStatusSchema } from '@/app/validationSchemas';
+import { createNewStatus } from '@/lib/actions/status.action';
 import getErrorMessage from '@/lib/getErrorMessage';
 import { FormInput } from '@/components/form-elements';
 
-function CreateBoardModal() {
+function CreateStatusModal() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -24,39 +24,39 @@ function CreateBoardModal() {
                 <div className='p-6 bg-indigo-600 text-white h-full text-lg font-medium grid place-items-center gap-2 w-max rounded-lg'>
                     <div className='grid place-items-center'>
                         <PlusIcon className='h-[50px] w-[50px]' />
-                        Create Board
+                        Create Status
                     </div>
                 </div>
             </DialogTrigger>
             <DialogContent>
-                <CreateBoardForm onSuccess={() => setIsOpen(false)} />
+                <CreateStatusForm onSuccess={() => setIsOpen(false)} />
             </DialogContent>
         </Dialog>
     );
 }
 
-type CreateBoardFormFields = z.infer<typeof createBoardSchema>;
-const defaultValues: CreateBoardFormFields = { project_id: '', name: '' };
+type CreateStatusFormFields = z.infer<typeof createStatusSchema>;
+const defaultValues: CreateStatusFormFields = { project_id: '', name: '' };
 
-interface CreateBoardFormProps {
+interface CreateStatusFormProps {
     onSuccess: () => void;
 }
-function CreateBoardForm({ onSuccess }: CreateBoardFormProps) {
+function CreateStatusForm({ onSuccess }: CreateStatusFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { project_id } = useParams();
 
-    const form = useForm<CreateBoardFormFields>({
+    const form = useForm<CreateStatusFormFields>({
         defaultValues: {
             ...defaultValues,
             project_id: project_id as string,
         },
-        resolver: zodResolver(createBoardSchema),
+        resolver: zodResolver(createStatusSchema),
     });
 
     const handleSubmit = form.handleSubmit(async (values) => {
         setIsLoading(true);
-        const { isSuccess, isError, error } = await createBoard({
+        const { isSuccess, isError, error } = await createNewStatus({
             pathToRevalidate: '/projects/[project_id]',
             ...values,
         });
@@ -70,16 +70,16 @@ function CreateBoardForm({ onSuccess }: CreateBoardFormProps) {
         <Form {...form}>
             <form onSubmit={handleSubmit} className='space-y-4'>
                 <div>
-                    <h1 className='text-2xl font-semibold'>Create Board</h1>
+                    <h1 className='text-2xl font-semibold'>Create Status</h1>
                     <p className='text-gray-500 text-sm'>
-                        create your board to group the issue
+                        create status to group the ticket
                     </p>
                 </div>
                 <div className='space-y-4'>
                     <FormInput
                         control={form.control}
                         name='name'
-                        label='Board Name'
+                        label='Status'
                     />
                 </div>
                 {errorMessage && (
@@ -96,4 +96,4 @@ function CreateBoardForm({ onSuccess }: CreateBoardFormProps) {
     );
 }
 
-export default CreateBoardModal;
+export default CreateStatusModal;

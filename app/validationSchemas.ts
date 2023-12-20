@@ -31,14 +31,14 @@ export const createProjectSchema = z.object({
     }),
 });
 
-export const createBoardSchema = z.object({
+export const createStatusSchema = z.object({
     project_id: z.string(),
     name: z.string(),
 });
 
 export const createTicketSchema = z.object({
     title: z.string(),
-    board_id: z.string(),
+    status_id: z.string(),
     content: z.string(),
     project_id: z.string(),
     type: z.string(),
