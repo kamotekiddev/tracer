@@ -6,15 +6,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
+import { Form, FormLabel } from "@/components/ui/form";
 import FormInput from "@/components/form-elements/FormInput";
 
-import { LoginSchema, LoginSchemaType, defaultValues } from "./validation";
+import {
+    RegisterSchema,
+    RegisterSchemaType,
+    defaultValues,
+} from "./validation";
 
-function LoginForm() {
-    const form = useForm<LoginSchemaType>({
+function RegisterForm() {
+    const form = useForm<RegisterSchemaType>({
         defaultValues,
-        resolver: zodResolver(LoginSchema),
+        resolver: zodResolver(RegisterSchema),
     });
 
     const onSubmit = form.handleSubmit((values) => {
@@ -26,9 +30,27 @@ function LoginForm() {
             <form onSubmit={onSubmit} className="w-full max-w-xl p-4">
                 <Card className="rounded-2xl">
                     <CardHeader>
-                        <CardTitle>Login to your account</CardTitle>
+                        <CardTitle>Create an account</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                        <div>
+                            <FormLabel>Name</FormLabel>
+                            <FormInput
+                                control={form.control}
+                                placeholder="First Name"
+                                name="firstName"
+                            />
+                            <FormInput
+                                control={form.control}
+                                placeholder="Middle Name (Optional)"
+                                name="middleName"
+                            />
+                            <FormInput
+                                control={form.control}
+                                placeholder="Last Name"
+                                name="lastName"
+                            />
+                        </div>
                         <FormInput
                             label="Email"
                             control={form.control}
@@ -42,10 +64,9 @@ function LoginForm() {
                             name="password"
                             type="password"
                         />
-                        <Button className="w-full block">Sign in</Button>
-
+                        <Button className="w-full block">Register</Button>
                         <div className="flex items-center justify-center">
-                            <span>Don&apos;t have an account?</span>
+                            <span>Already have an account?</span>
                             <Link href="/register">
                                 <Button
                                     variant="link"
@@ -53,7 +74,7 @@ function LoginForm() {
                                     size="lg"
                                     className="w-full block font-bold px-2"
                                 >
-                                    Sign Up
+                                    Sign in
                                 </Button>
                             </Link>
                         </div>
@@ -64,4 +85,4 @@ function LoginForm() {
     );
 }
 
-export default LoginForm;
+export default RegisterForm;

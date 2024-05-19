@@ -14,7 +14,7 @@ import { Input } from "../ui/input";
 import { Control, FieldValues, Path } from "react-hook-form";
 
 interface Props<T> extends ComponentPropsWithRef<"input"> {
-    label: string;
+    label?: string;
     description?: string;
     control: Control<FieldValues & T>;
     name: Path<FieldValues & T>;

@@ -1,11 +1,7 @@
-import React from "react";
+import RegisterForm from "@/features/auth/register/RegisterForm";
 
 function RegisterPage() {
-    return (
-        <div className="p-4 text-center bg-red-500 w-full max-w-xl">
-            RegisterPage
-        </div>
-    );
+    return <RegisterForm />;
 }
 
 export default RegisterPage;
