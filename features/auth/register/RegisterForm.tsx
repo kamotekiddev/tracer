@@ -67,7 +67,7 @@ function RegisterForm() {
                         <Button className="w-full block">Register</Button>
                         <div className="flex items-center justify-center">
                             <span>Already have an account?</span>
-                            <Link href="/register">
+                            <Link href="/login">
                                 <Button
                                     variant="link"
                                     type="button"
