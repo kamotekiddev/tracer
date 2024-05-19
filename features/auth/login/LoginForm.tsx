@@ -9,6 +9,7 @@ import { Form } from "@/components/ui/form";
 import FormInput from "@/components/form-elements/FormInput";
 
 import { LoginSchema, LoginSchemaType, defaultValues } from "./validation";
+import Link from "next/link";
 
 function LoginForm() {
     const form = useForm<LoginSchemaType>({
@@ -40,7 +41,21 @@ function LoginForm() {
                             placeholder="Enter you password"
                             name="password"
                         />
-                        <Button className="w-full block mt-10">Sign in</Button>
+                        <Button className="w-full block">Sign in</Button>
+
+                        <div className="flex items-center justify-center">
+                            <span>Don&apos;t have an account?</span>
+                            <Link href="/register">
+                                <Button
+                                    variant="link"
+                                    type="button"
+                                    size="lg"
+                                    className="w-full block font-bold px-2"
+                                >
+                                    Sign Up
+                                </Button>
+                            </Link>
+                        </div>
                     </CardContent>
                 </Card>
             </form>
