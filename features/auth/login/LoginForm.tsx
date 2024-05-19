@@ -43,6 +43,7 @@ function LoginForm() {
             const res = await login.mutateAsync(values);
             Cookies.set("bearer", res.data.accessToken);
             Cookies.set("refresh", res.data.refreshToken);
+            window.location.reload();
         } catch (error) {
             if (isAxiosError<ErrorResponse>(error)) {
                 const { message } = error.response?.data || {};
