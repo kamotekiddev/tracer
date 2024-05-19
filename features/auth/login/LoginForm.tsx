@@ -1,24 +1,14 @@
 "use client";
 
-import * as z from "zod";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormInput from "@/components/form-elements/FormInput";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
+import FormInput from "@/components/form-elements/FormInput";
 
-const LoginSchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-});
-
-type LoginSchemaType = z.infer<typeof LoginSchema>;
-
-const defaultValues: LoginSchemaType = {
-    email: "",
-    password: "",
-};
+import { LoginSchema, LoginSchemaType, defaultValues } from "./validation";
 
 function LoginForm() {
     const form = useForm<LoginSchemaType>({
@@ -33,7 +23,7 @@ function LoginForm() {
     return (
         <Form {...form}>
             <form onSubmit={onSubmit} className="w-full max-w-xl p-4">
-                <Card>
+                <Card className="rounded-2xl">
                     <CardHeader>
                         <CardTitle>Login to your account</CardTitle>
                     </CardHeader>
