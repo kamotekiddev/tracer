@@ -1,7 +1,7 @@
-import React from "react";
+import ProjectsTable from "./ProjectsTable";
 
-function Proejects() {
-    return <div>Proejects</div>;
+function Projects() {
+    return <ProjectsTable />;
 }
 
-export default Proejects;
+export default Projects;
