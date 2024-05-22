@@ -12,7 +12,7 @@ const projectsNavigation = [
 function ProjectsNavigation() {
     const params = useSearchParams();
     const router = useRouter();
-    const value = params.get("filter") || "all";
+    const value = params.get("filter") || "ALL";
 
     return (
         <NavigationList
