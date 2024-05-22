@@ -15,7 +15,7 @@ interface Props {
 
 function NavigationList({ items, value, onChange }: Props) {
     return (
-        <div className="flex gap-2">
+        <div className="flex gap-6">
             {items.map((item, idx) => (
                 <NavigationListItem
                     isActive={item.value === value}
