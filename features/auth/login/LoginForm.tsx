@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import FormInput from "@/components/form-elements/FormInput";
+import FormInput from "@/components/FormElements/FormInput";
 
 import * as authService from "../authService";
 import { LoginSchema, LoginSchemaType, defaultValues } from "./validation";

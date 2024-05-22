@@ -1,7 +1,7 @@
 "use client";
-
 import { AxiosError, AxiosResponse } from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { SquareArrowLeft } from "lucide-react";
 import {
     Table,
     TableBody,
@@ -14,9 +14,15 @@ import {
 import * as projectService from "./projectService";
 import { ErrorResponse } from "../interfaces";
 import { Project } from "./projects";
+import { Button } from "@/components/ui/button";
 
 function ProjectsTable() {
-    const { data: projects, isFetching } = useQuery<
+    const {
+        data: projects,
+        isError,
+        isFetching,
+        error,
+    } = useQuery<
         AxiosResponse<Project[]>,
         AxiosError<ErrorResponse>,
         Project[]
@@ -26,6 +32,7 @@ function ProjectsTable() {
     });
 
     if (isFetching) return <p>Loading...</p>;
+    if (isError) return <p>{error.message}</p>;
 
     return (
         <Table>
@@ -53,7 +60,11 @@ function ProjectsTable() {
                         <TableCell className="font-medium">
                             {project.owner.email}
                         </TableCell>
-                        <TableCell className="font-medium">...</TableCell>
+                        <TableCell className="font-medium">
+                            <Button size="icon" variant="outline">
+                                <SquareArrowLeft />
+                            </Button>
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
