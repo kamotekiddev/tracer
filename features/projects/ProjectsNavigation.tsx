@@ -4,9 +4,9 @@ import NavigationList from "@/components/NavigationList";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const projectsNavigation = [
-    { title: "All", value: "all" },
-    { title: "My Projects", value: "my-projects" },
-    { title: "I am Member", value: "i-am-member" },
+    { title: "All", value: "ALL" },
+    { title: "My Projects", value: "MY_PROJECTS" },
+    { title: "I am Member", value: "I_AM_MEMBER" },
 ];
 
 function ProjectsNavigation() {

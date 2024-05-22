@@ -18,23 +18,27 @@ import TableSkeleton from "../../components/Loading/TableSkeleton";
 import * as projectService from "./projectService";
 import { type ErrorResponse } from "../interfaces";
 import { type Project } from "./projects";
+import { useSearchParams } from "next/navigation";
 
 function ProjectsTable() {
+    const params = useSearchParams();
+    const filter = params.get("filter") || "ALL";
+
     const {
         data: projects,
         isError,
-        isFetching,
+        isLoading,
         error,
     } = useQuery<
         AxiosResponse<Project[]>,
         AxiosError<ErrorResponse>,
         Project[]
     >({
-        queryFn: projectService.getProjects,
-        queryKey: ["projects"],
+        queryFn: () => projectService.getProjects(filter),
+        queryKey: ["projects", filter],
     });
 
-    if (isFetching) return <TableSkeleton rows={8} columns={5} />;
+    if (isLoading) return <TableSkeleton rows={8} columns={5} />;
     if (isError)
         return (
             <InlineError
