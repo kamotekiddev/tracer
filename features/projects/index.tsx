@@ -10,9 +10,7 @@ function Projects() {
                     <ProjectsNavigation />
                 </div>
             </div>
-            <div className="border rounded-lg">
-                <ProjectsTable />
-            </div>
+            <ProjectsTable />
         </div>
     );
 }
