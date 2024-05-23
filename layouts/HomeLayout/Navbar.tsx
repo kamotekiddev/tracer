@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import MainNavigation from "./MainNavigation";
+import CreateButton from "./CreateButton";
 
 function Navbar() {
     return (
@@ -10,7 +9,7 @@ function Navbar() {
                 <h1 className="font-bold">Tracer</h1>
                 <nav className="flex gap-8 items-center size-full py-4">
                     <MainNavigation />
-                    <Button size="sm">Create</Button>
+                    <CreateButton />
                 </nav>
             </div>
             <Avatar>
