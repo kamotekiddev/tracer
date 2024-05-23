@@ -78,7 +78,7 @@ function CreateProjectModal({ open, onClose }: Props) {
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="overflow-hidden">
                 <Form {...form}>
-                    <form onSubmit={onSubmit}>
+                    <form onSubmit={onSubmit} className="space-y-4">
                         {createProject.isPending && <ModalLoading />}
                         <DialogHeader>
                             <DialogTitle>Create Project</DialogTitle>
