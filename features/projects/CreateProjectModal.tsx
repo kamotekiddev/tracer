@@ -20,14 +20,24 @@ import { useToast } from "@/components/ui/use-toast";
 import * as projectService from "./projectService";
 import { queryClient } from "@/providers/QueryProvider";
 import { ErrorResponse } from "../interfaces";
+import { Separator } from "@/components/ui/separator";
+import FormTextAreaInput from "@/components/FormElements/FormTextAreInput";
+import { useCallback, useEffect } from "react";
+import { ALPHA } from "../regex";
 
 const createProjectSchema = z.object({
-    name: z.string().min(1, "This field is required."),
+    name: z.string().min(5, "This field is required."),
+    key: z.string().min(3, "This field is required."),
+    description: z.string(),
 });
 
 export type CreateProjectSchemaType = z.infer<typeof createProjectSchema>;
 
-const defaultValues: CreateProjectSchemaType = { name: "" };
+const defaultValues: CreateProjectSchemaType = {
+    name: "",
+    key: "",
+    description: "",
+};
 
 interface Props {
     open: boolean;
@@ -50,6 +60,31 @@ function CreateProjectModal({ open, onClose }: Props) {
         resolver: zodResolver(createProjectSchema),
     });
 
+    const projectName = form.watch("name");
+
+    const generateProjectKey = useCallback(() => {
+        let key = "";
+        if (!projectName) return null;
+
+        const splittedString = projectName.split(" ");
+
+        if (splittedString.length >= 3)
+            key = splittedString.map((str) => str[0]).join("");
+        else key = projectName.substring(0, 3);
+
+        return form.setValue("key", key);
+    }, [projectName, form]);
+
+    useEffect(() => {
+        generateProjectKey();
+    }, [generateProjectKey]);
+
+    const handleClose = () => {
+        if (createProject.isPending) return null;
+        form.reset(defaultValues);
+        onClose();
+    };
+
     const onSubmit = form.handleSubmit(async (values) => {
         try {
             await createProject.mutateAsync(values);
@@ -58,38 +93,66 @@ function CreateProjectModal({ open, onClose }: Props) {
                 description: "A new record added.",
             });
             queryClient.invalidateQueries({ queryKey: ["projects"] });
-            onClose();
+            handleClose();
         } catch (error) {
-            onClose();
+            if (isAxiosError<ErrorResponse>(error)) {
+                if (Array.isArray(error.response?.data.message))
+                    return error.response?.data.message.forEach(
+                        ({ property, message }) =>
+                            form.setError(
+                                property as keyof CreateProjectSchemaType,
+                                { type: "api_validation_error", message }
+                            )
+                    );
 
-            if (
-                isAxiosError<ErrorResponse>(error) &&
-                typeof error.response?.data.message == "string"
-            )
-                toast({
+                return toast({
                     title: "Creation Failed",
                     description: error.response?.data.message,
                     variant: "destructive",
                 });
+            }
         }
     });
 
     return (
-        <Dialog open={open} onOpenChange={onClose}>
+        <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="overflow-hidden">
+                {createProject.isPending && <ModalLoading />}
                 <Form {...form}>
                     <form onSubmit={onSubmit} className="space-y-4">
-                        {createProject.isPending && <ModalLoading />}
                         <DialogHeader>
                             <DialogTitle>Create Project</DialogTitle>
                         </DialogHeader>
+                        <Separator />
                         <FormInput
                             name="name"
                             label="Project Name"
                             control={form.control}
+                            required
+                            formatValue={(value) =>
+                                value.replace(ALPHA, "").toUpperCase()
+                            }
+                        />
+                        <FormInput
+                            name="key"
+                            label="Key"
+                            control={form.control}
+                            required
+                            formatValue={(value) =>
+                                value.replace(ALPHA, "").toUpperCase()
+                            }
+                        />
+                        <FormTextAreaInput
+                            name="description"
+                            label="Description"
+                            control={form.control}
                         />
                         <DialogFooter>
-                            <Button variant="outline" onClick={onClose}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={onClose}
+                            >
                                 Cancel
                             </Button>
                             <Button>Create</Button>

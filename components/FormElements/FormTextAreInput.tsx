@@ -2,7 +2,6 @@
 
 import React, { ComponentPropsWithRef } from "react";
 import {
-    Form,
     FormControl,
     FormDescription,
     FormField,
@@ -10,24 +9,22 @@ import {
     FormLabel,
     FormMessage,
 } from "../ui/form";
-import { Input, InputProps } from "../ui/input";
 import { Control, FieldValues, Path } from "react-hook-form";
+import { Textarea } from "../ui/textarea";
 
-interface Props<T> extends InputProps {
+interface Props<T> extends ComponentPropsWithRef<"textarea"> {
     label?: string;
     description?: string;
     control: Control<FieldValues & T>;
     name: Path<FieldValues & T>;
-    formatValue?: (value: string) => string;
 }
 
-function FormInput<T>({
+function FormTextAreaInput<T>({
     name,
     label,
     description,
     control,
     required,
-    formatValue,
     ...props
 }: Props<T>) {
     return (
@@ -40,18 +37,7 @@ function FormInput<T>({
                         {required ? label?.concat(" *") : label}
                     </FormLabel>
                     <FormControl>
-                        <Input
-                            {...props}
-                            {...field}
-                            onChange={(e) => {
-                                if (formatValue)
-                                    return field.onChange(
-                                        formatValue(e.target.value)
-                                    );
-
-                                return field.onChange(e.target.value);
-                            }}
-                        />
+                        <Textarea {...props} {...field} />
                     </FormControl>
                     <FormDescription>{description}</FormDescription>
                     <FormMessage>{error?.message}</FormMessage>
@@ -61,4 +47,4 @@ function FormInput<T>({
     );
 }
 
-export default FormInput;
+export default FormTextAreaInput;

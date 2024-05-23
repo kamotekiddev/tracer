@@ -52,33 +52,25 @@ function ProjectsTable() {
             <Table>
                 <TableHeader>
                     <TableRow>
+                        <TableHead>Key</TableHead>
                         <TableHead>Name</TableHead>
+                        <TableHead>Description</TableHead>
                         <TableHead>Members</TableHead>
                         <TableHead>Issues</TableHead>
                         <TableHead>Owner</TableHead>
-                        <TableHead>Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {projects?.map((project) => (
                         <TableRow key={project.id}>
-                            <TableCell className="font-medium">
-                                {project.name}
+                            <TableCell>{project.key}</TableCell>
+                            <TableCell>{project.name}</TableCell>
+                            <TableCell>
+                                {project?.description || "N/A"}
                             </TableCell>
-                            <TableCell className="font-medium">
-                                {project.members}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                                {project.issues}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                                {project.owner.email}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                                <Button size="icon" variant="outline">
-                                    <SquareArrowLeft />
-                                </Button>
-                            </TableCell>
+                            <TableCell>{project.members}</TableCell>
+                            <TableCell>{project.issues}</TableCell>
+                            <TableCell>{project.owner.email}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
