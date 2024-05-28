@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { Button, ButtonProps } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { Separator } from "../ui/separator";
 
 interface Props extends PropsWithChildren, ButtonProps {
     isActive?: boolean;
@@ -13,18 +14,26 @@ function NavigationListItem({
     ...props
 }: Props) {
     return (
-        <Button
-            size="sm"
-            variant="outline"
-            {...props}
+        <div
             className={cn(
-                "rounded-none border-x-0 border-b-4 border-t-0 border-transparent px-0 hover:bg-transparent",
-                isActive && "border-slate-950 font-bold",
+                "relative grid min-h-[70px] place-items-center",
                 className,
             )}
         >
-            {children}
-        </Button>
+            <Button
+                {...props}
+                variant="outline"
+                className={cn(
+                    "border-none p-0 hover:bg-transparent hover:text-primary",
+                    isActive && "font-bold text-primary",
+                )}
+            >
+                {children}
+            </Button>
+            {isActive && (
+                <Separator className="absolute bottom-0 h-1 bg-primary" />
+            )}
+        </div>
     );
 }
 

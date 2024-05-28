@@ -27,7 +27,7 @@ function NavigationMenu({ items, onSelect, children }: Props) {
         <Menu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-10 rounded-none border-b-4 border-transparent p-0 hover:bg-transparent data-[state=open]:border-b-neutral-950 data-[state=closed]:bg-transparent data-[state=open]:bg-transparent data-[state=open]:font-bold">
+                    <NavigationMenuTrigger className="border-transparent p-0 hover:bg-transparent hover:text-primary data-[state=closed]:bg-transparent data-[state=open]:bg-transparent data-[state=open]:font-bold data-[state=open]:text-primary">
                         {children}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>

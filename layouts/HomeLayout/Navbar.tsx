@@ -7,7 +7,7 @@ function Navbar() {
         <header className="flex items-center justify-between gap-4 px-8">
             <div className="flex items-center gap-20">
                 <h1 className="font-bold">Tracer</h1>
-                <nav className="flex size-full items-center gap-8 py-4">
+                <nav className="flex size-full items-center gap-8">
                     <MainNavigation />
                     <CreateButton />
                 </nav>
