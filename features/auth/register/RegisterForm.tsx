@@ -64,7 +64,7 @@ function RegisterForm() {
                             name="password"
                             type="password"
                         />
-                        <Button className="w-full block">Register</Button>
+                        <Button className="block w-full">Register</Button>
                         <div className="flex items-center justify-center">
                             <span>Already have an account?</span>
                             <Link href="/login">
@@ -72,7 +72,7 @@ function RegisterForm() {
                                     variant="link"
                                     type="button"
                                     size="lg"
-                                    className="w-full block font-bold px-2"
+                                    className="block w-full px-2 font-bold"
                                 >
                                     Sign in
                                 </Button>

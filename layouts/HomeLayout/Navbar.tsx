@@ -4,10 +4,10 @@ import CreateButton from "./CreateButton";
 
 function Navbar() {
     return (
-        <header className="flex items-center gap-4 px-8 justify-between">
-            <div className="flex gap-20 items-center">
+        <header className="flex items-center justify-between gap-4 px-8">
+            <div className="flex items-center gap-20">
                 <h1 className="font-bold">Tracer</h1>
-                <nav className="flex gap-8 items-center size-full py-4">
+                <nav className="flex size-full items-center gap-8 py-4">
                     <MainNavigation />
                     <CreateButton />
                 </nav>

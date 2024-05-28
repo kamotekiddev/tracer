@@ -10,3 +10,8 @@ export const createProject = async (body: CreateProjectSchemaType) => {
     const res = await client.post("/projects", body);
     return res.data;
 };
+
+export const getProjectById = async (projectId: string) => {
+    const res = await client.get(`/projects/${projectId}`);
+    return res.data;
+};

@@ -18,9 +18,9 @@ function NavigationListItem({
             variant="outline"
             {...props}
             className={cn(
-                "border-x-0 border-t-0 border-b-4 border-transparent rounded-none px-0 hover:bg-transparent",
+                "rounded-none border-x-0 border-b-4 border-t-0 border-transparent px-0 hover:bg-transparent",
                 isActive && "border-slate-950 font-bold",
-                className
+                className,
             )}
         >
             {children}

@@ -27,7 +27,7 @@ function NavigationMenu({ items, onSelect, children }: Props) {
         <Menu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger className="data-[state=open]:font-bold p-0 data-[state=open]:bg-transparent hover:bg-transparent data-[state=closed]:bg-transparent h-10 border-b-4 rounded-none border-transparent data-[state=open]:border-b-neutral-950">
+                    <NavigationMenuTrigger className="h-10 rounded-none border-b-4 border-transparent p-0 hover:bg-transparent data-[state=open]:border-b-neutral-950 data-[state=closed]:bg-transparent data-[state=open]:bg-transparent data-[state=open]:font-bold">
                         {children}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -59,8 +59,8 @@ const ListItem = React.forwardRef<
                 <button
                     ref={ref}
                     className={cn(
-                        "block text-left select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                        className
+                        "block select-none space-y-1 rounded-md p-3 text-left leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                        className,
                     )}
                     {...props}
                 >

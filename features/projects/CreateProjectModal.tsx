@@ -101,8 +101,11 @@ function CreateProjectModal({ open, onClose }: Props) {
                         ({ property, message }) =>
                             form.setError(
                                 property as keyof CreateProjectSchemaType,
-                                { type: "api_validation_error", message }
-                            )
+                                {
+                                    type: "api_validation_error",
+                                    message,
+                                },
+                            ),
                     );
 
                 return toast({

@@ -12,3 +12,28 @@ export interface Project {
     createdAt: string;
     updatedAt: string;
 }
+
+interface Issue {
+    id: string;
+    title: string;
+    description: null;
+    type: "TASK" | "BUG" | "STORY";
+    categoryId: string;
+    reporterId: string;
+    reporter: User;
+    assigneeId: string | null;
+    assignee: User | null;
+}
+interface Category {
+    id: string;
+    name: string;
+    projectId: string;
+    issues: Issue[];
+}
+
+export interface ProjectWithCompleteDetails
+    extends Omit<Project, "issues" | "members"> {
+    members: User[];
+    issues: Issue[];
+    categories: Category[];
+}

@@ -52,7 +52,7 @@ function LoginForm() {
                         form.setError(property as keyof LoginSchemaType, {
                             type: "api_validation_error",
                             message,
-                        })
+                        }),
                     );
 
                 return toast({
@@ -94,7 +94,7 @@ function LoginForm() {
                             disabled={login.isPending}
                         />
                         <Button
-                            className="w-full block"
+                            className="block w-full"
                             disabled={login.isPending}
                         >
                             Sign in
@@ -106,7 +106,7 @@ function LoginForm() {
                                     variant="link"
                                     type="button"
                                     size="lg"
-                                    className="w-full block font-bold px-2"
+                                    className="block w-full px-2 font-bold"
                                 >
                                     Sign Up
                                 </Button>

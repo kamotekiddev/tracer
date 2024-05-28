@@ -19,8 +19,8 @@ function TableSkeleton({ columns, rows }: Props) {
                 <TableRow className="border-none">
                     {[...Array(columns).keys()].map((col) => (
                         <TableHead key={col} className="p-2">
-                            <div className="bg-neutral-100 size-full rounded-full overflow-hidden">
-                                <div className="bg-gradient-to-r size-full z-10 inset-y-0 from-transparent via-neutral-200 to-transparent animate-[shimmer_3s_infinite]" />
+                            <div className="size-full overflow-hidden rounded-full bg-neutral-100">
+                                <div className="inset-y-0 z-10 size-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-neutral-200 to-transparent" />
                             </div>
                         </TableHead>
                     ))}
@@ -31,8 +31,8 @@ function TableSkeleton({ columns, rows }: Props) {
                     <TableRow key={row} className="border-none">
                         {[...Array(columns).keys()].map((col) => (
                             <TableHead key={col} className="p-2">
-                                <div className="bg-neutral-100 size-full rounded-full overflow-hidden">
-                                    <div className="bg-gradient-to-r size-full z-10 inset-y-0 from-transparent via-neutral-200 to-transparent animate-[shimmer_3s_infinite]" />
+                                <div className="size-full overflow-hidden rounded-full bg-neutral-100">
+                                    <div className="inset-y-0 z-10 size-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-neutral-200 to-transparent" />
                                 </div>
                             </TableHead>
                         ))}

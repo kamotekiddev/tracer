@@ -46,7 +46,7 @@ function FormInput<T>({
                             onChange={(e) => {
                                 if (formatValue)
                                     return field.onChange(
-                                        formatValue(e.target.value)
+                                        formatValue(e.target.value),
                                     );
 
                                 return field.onChange(e.target.value);

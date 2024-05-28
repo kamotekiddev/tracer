@@ -65,7 +65,7 @@ function ProjectsTable() {
                             <TableCell>{project.key}</TableCell>
                             <TableCell>
                                 <Link
-                                    className="hover:underline font-semibold"
+                                    className="font-semibold hover:underline"
                                     href={`/projects/${project.id}`}
                                 >
                                     {project.name}
