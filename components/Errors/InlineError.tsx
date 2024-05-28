@@ -10,7 +10,7 @@ function InlineError({
     message = "Something went wrong.",
 }: Props) {
     return (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="h-max">
             <InfoIcon className="size-5" />
             <AlertTitle>{title}</AlertTitle>
             <AlertDescription>{message}</AlertDescription>

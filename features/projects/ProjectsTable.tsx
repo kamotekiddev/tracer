@@ -12,21 +12,25 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import FullScreenLoading from "@/components/Loading/FullScreenLoading";
 import InlineError from "@/components/Errors/InlineError";
-import TableSkeleton from "../../components/Loading/TableSkeleton";
+import EmptyState from "@/components/EmptyState";
 
 import * as projectService from "./projectService";
 import { type ErrorResponse } from "../interfaces";
 import { type Project } from "./projects";
+import CreateProjectModal from "./CreateProjectModal";
+import { useState } from "react";
 
 function ProjectsTable() {
     const params = useSearchParams();
     const filter = params.get("filter") || "ALL";
+    const [createProjectModal, setCreateProjectModal] = useState(false);
 
     const {
         data: projects,
         isError,
-        isLoading,
+        isFetching,
         error,
     } = useQuery<
         AxiosResponse<Project[]>,
@@ -37,51 +41,70 @@ function ProjectsTable() {
         queryKey: ["projects", filter],
     });
 
-    if (isLoading) return <TableSkeleton rows={8} columns={5} />;
-    if (isError)
-        return (
+    let content;
+    if (isFetching) content = <FullScreenLoading />;
+    else if (isError)
+        content = (
             <InlineError
                 title={error.message}
                 message={error.response?.data.message as string}
             />
         );
+    else if (!projects?.length)
+        content = (
+            <EmptyState
+                title="Empty Projects"
+                createText="Create Project"
+                onCreate={() => setCreateProjectModal(true)}
+            />
+        );
+    else
+        content = (
+            <div className="rounded-lg border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Key</TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Description</TableHead>
+                            <TableHead>Members</TableHead>
+                            <TableHead>Issues</TableHead>
+                            <TableHead>Owner</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {projects?.map((project) => (
+                            <TableRow key={project.id}>
+                                <TableCell>{project.key}</TableCell>
+                                <TableCell>
+                                    <Link
+                                        className="font-semibold hover:underline"
+                                        href={`/projects/${project.id}`}
+                                    >
+                                        {project.name}
+                                    </Link>
+                                </TableCell>
+                                <TableCell>
+                                    {project?.description || "N/A"}
+                                </TableCell>
+                                <TableCell>{project.members}</TableCell>
+                                <TableCell>{project.issues}</TableCell>
+                                <TableCell>{project.owner.email}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+        );
 
     return (
-        <div className="rounded-lg border">
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Key</TableHead>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Description</TableHead>
-                        <TableHead>Members</TableHead>
-                        <TableHead>Issues</TableHead>
-                        <TableHead>Owner</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {projects?.map((project) => (
-                        <TableRow key={project.id}>
-                            <TableCell>{project.key}</TableCell>
-                            <TableCell>
-                                <Link
-                                    className="font-semibold hover:underline"
-                                    href={`/projects/${project.id}`}
-                                >
-                                    {project.name}
-                                </Link>
-                            </TableCell>
-                            <TableCell>
-                                {project?.description || "N/A"}
-                            </TableCell>
-                            <TableCell>{project.members}</TableCell>
-                            <TableCell>{project.issues}</TableCell>
-                            <TableCell>{project.owner.email}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </div>
+        <>
+            {content}
+            <CreateProjectModal
+                open={createProjectModal}
+                onClose={() => setCreateProjectModal(false)}
+            />
+        </>
     );
 }
 
