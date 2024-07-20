@@ -12,9 +12,11 @@ function Navbar() {
                     <CreateButton />
                 </nav>
             </div>
-            <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
+            <Avatar className="size-8">
+                <AvatarImage />
+                <AvatarFallback className="text-xs font-semibold">
+                    CN
+                </AvatarFallback>
             </Avatar>
         </header>
     );

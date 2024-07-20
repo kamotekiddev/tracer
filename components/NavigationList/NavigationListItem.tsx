@@ -16,7 +16,7 @@ function NavigationListItem({
     return (
         <div
             className={cn(
-                "relative grid min-h-[70px] place-items-center",
+                "relative grid min-h-[50px] place-items-center",
                 className,
             )}
         >

@@ -36,4 +36,5 @@ export interface ProjectWithCompleteDetails
     members: User[];
     issues: Issue[];
     categories: Category[];
+    currentSprintId: string | null;
 }
