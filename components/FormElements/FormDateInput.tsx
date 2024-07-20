@@ -27,9 +27,9 @@ interface Props<T> {
     description?: string;
     control: Control<FieldValues & T>;
     name: Path<FieldValues & T>;
-    formatValue?: (value: string) => string;
     placeholder?: string;
     required?: boolean;
+    dateFormat?: string;
 }
 
 function FormDateInput<T>({
@@ -38,7 +38,7 @@ function FormDateInput<T>({
     description,
     control,
     required,
-    formatValue,
+    dateFormat = "MM dd, yyyy",
     placeholder = "Pick a Date",
 }: Props<T>) {
     return (
@@ -47,9 +47,7 @@ function FormDateInput<T>({
             name={name}
             render={({ field, fieldState: { error } }) => {
                 const value = field.value
-                    ? formatValue
-                        ? formatValue(field.value)
-                        : format(field.value, "PPP")
+                    ? format(field.value, dateFormat)
                     : placeholder;
 
                 return (
