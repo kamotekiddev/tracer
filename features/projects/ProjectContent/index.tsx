@@ -8,13 +8,15 @@ import { Button } from "@/components/ui/button";
 import { ClockIcon, EllipsisIcon } from "lucide-react";
 import { QueryKeys } from "@/lib/query-keys";
 import StartSprintView from "./StartSprintView";
+import FullScreenLoading from "@/components/Loading/FullScreenLoading";
+import CompleteSprintModal from "./CompleteSprintModal";
 
 interface Props {
     projectId: string;
 }
 
 function ProjectContent({ projectId }: Props) {
-    const { data: project } = useQuery<
+    const { data: project, ...projectState } = useQuery<
         ProjectWithCompleteDetails,
         AxiosError<ErrorResponse>
     >({
@@ -22,21 +24,20 @@ function ProjectContent({ projectId }: Props) {
         queryKey: [QueryKeys.PROJECTS, projectId],
     });
 
-    if (!project?.currentSprintId) return <StartSprintView />;
+    if (projectState.isLoading) return <FullScreenLoading />;
+    else if (!project?.currentSprintId) return <StartSprintView />;
 
     return (
-        <div className="grid grid-rows-[auto_auto_1fr] gap-4 p-4">
+        <div className="relative grid grid-rows-[auto_auto_1fr] gap-4 p-4">
             <div className="flex items-center justify-between gap-2">
                 <h1 className="text-2xl font-semibold">
-                    {project?.key} {`Sprint ${1}`}
+                    {project?.key} {`Sprint ${project.currentSprint?.number}`}
                 </h1>
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-sm font-semibold text-neutral-500">
                         <ClockIcon className="size-5" /> 3 Days
                     </div>
-                    <Button size="sm" variant="secondary">
-                        Complete Sprint
-                    </Button>
+                    <CompleteSprintModal sprintId={project.currentSprintId} />
                     <Button variant="secondary" className="size-9 p-0">
                         <EllipsisIcon className="size-5" />
                     </Button>

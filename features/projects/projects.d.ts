@@ -31,10 +31,20 @@ interface Category {
     issues: Issue[];
 }
 
+interface Sprint {
+    id: string;
+    number: number;
+    startDate: string;
+    endDate: string;
+    completed: boolean;
+    projectId: string;
+}
+
 export interface ProjectWithCompleteDetails
     extends Omit<Project, "issues" | "members"> {
     members: User[];
     issues: Issue[];
     categories: Category[];
     currentSprintId: string | null;
+    currentSprint: Sprint | null;
 }

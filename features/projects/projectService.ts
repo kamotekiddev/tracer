@@ -21,3 +21,8 @@ export const createSprint = async (data: CreateSprintRequest) => {
     const res = await client.post("/sprints", data);
     return res.data;
 };
+
+export const completeSprint = async (projectId: string) => {
+    const res = await client.patch(`/sprints/${projectId}/complete`);
+    return res.data;
+};
