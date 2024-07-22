@@ -1,5 +1,5 @@
 "use client";
-import NavigationList from "@/components/NavigationList";
+import NavigationList from "@/components/navigation-list";
 import { usePathname, useRouter } from "next/navigation";
 
 const mainNavItems = [

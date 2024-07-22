@@ -12,8 +12,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import FullScreenLoading from "@/components/Loading/FullScreenLoading";
-import InlineError from "@/components/Errors/InlineError";
+import FullScreenLoading from "@/components/loading/FullScreenLoading";
+import InlineError from "@/components/errors/InlineError";
 import EmptyState from "@/components/EmptyState";
 
 import * as projectService from "./projectService";

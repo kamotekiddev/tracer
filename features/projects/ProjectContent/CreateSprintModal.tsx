@@ -19,7 +19,7 @@ import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { AxiosError, isAxiosError } from "axios";
 import { useParams } from "next/navigation";
-import FormDateInput from "@/components/FormElements/FormDateInput";
+import FormDateInput from "@/components/form-elements/FormDateInput";
 import { ErrorResponse } from "@/features/interfaces";
 import { useToast } from "@/components/ui/use-toast";
 import { queryClient } from "@/providers/QueryProvider";

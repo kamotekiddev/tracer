@@ -17,7 +17,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 import * as projectService from "../projectService";
 import { QueryKeys } from "@/lib/query-keys";
-import ModalLoading from "@/components/Loading/ModalLoading";
+import ModalLoading from "@/components/loading/ModalLoading";
 
 interface Props {
     sprintId: string;

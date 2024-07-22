@@ -13,15 +13,15 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 
-import ModalLoading from "@/components/Loading/ModalLoading";
-import FormInput from "@/components/FormElements/FormInput";
+import ModalLoading from "@/components/loading/ModalLoading";
+import FormInput from "@/components/form-elements/FormInput";
 
 import { useToast } from "@/components/ui/use-toast";
 import * as projectService from "./projectService";
 import { queryClient } from "@/providers/QueryProvider";
 import { ErrorResponse } from "../interfaces";
 import { Separator } from "@/components/ui/separator";
-import FormTextAreaInput from "@/components/FormElements/FormTextAreInput";
+import FormTextAreaInput from "@/components/form-elements/FormTextAreInput";
 import { useCallback, useEffect } from "react";
 import { ALPHA } from "../regex";
 

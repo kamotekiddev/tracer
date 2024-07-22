@@ -1,6 +1,6 @@
 "use client";
 
-import NavigationList from "@/components/NavigationList";
+import NavigationList from "@/components/navigation-list";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const projectsNavigation = [
