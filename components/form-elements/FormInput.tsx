@@ -1,8 +1,9 @@
 "use client";
 
-import React, { ComponentPropsWithRef } from "react";
+import React from "react";
+import { Control, FieldValues, Path } from "react-hook-form";
+
 import {
-    Form,
     FormControl,
     FormDescription,
     FormField,
@@ -10,14 +11,14 @@ import {
     FormLabel,
     FormMessage,
 } from "../ui/form";
-import { Input } from "../ui/input";
-import { Control, FieldValues, Path } from "react-hook-form";
+import { Input, InputProps } from "../ui/input";
 
-interface Props<T> extends ComponentPropsWithRef<"input"> {
+interface Props<T> extends InputProps {
     label?: string;
     description?: string;
     control: Control<FieldValues & T>;
     name: Path<FieldValues & T>;
+    formatValue?: (value: string) => string;
 }
 
 function FormInput<T>({
@@ -25,6 +26,8 @@ function FormInput<T>({
     label,
     description,
     control,
+    required,
+    formatValue,
     ...props
 }: Props<T>) {
     return (
@@ -33,9 +36,22 @@ function FormInput<T>({
             name={name}
             render={({ field, fieldState: { error } }) => (
                 <FormItem>
-                    <FormLabel>{label}</FormLabel>
+                    <FormLabel>
+                        {required ? label?.concat(" *") : label}
+                    </FormLabel>
                     <FormControl>
-                        <Input {...props} {...field} />
+                        <Input
+                            {...props}
+                            {...field}
+                            onChange={(e) => {
+                                if (formatValue)
+                                    return field.onChange(
+                                        formatValue(e.target.value),
+                                    );
+
+                                return field.onChange(e.target.value);
+                            }}
+                        />
                     </FormControl>
                     <FormDescription>{description}</FormDescription>
                     <FormMessage>{error?.message}</FormMessage>

@@ -4,9 +4,9 @@ import Navbar from "./Navbar";
 
 function HomeLayout({ children }: PropsWithChildren) {
     return (
-        <main className="h-screen grid grid-rows-[auto_1fr]">
+        <main className="grid h-screen grid-rows-[auto_1fr] divide-y">
             <Navbar />
-            <div className="p-4">{children}</div>
+            <div className="grid">{children}</div>
         </main>
     );
 }

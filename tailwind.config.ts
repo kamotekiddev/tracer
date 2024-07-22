@@ -69,6 +69,11 @@ const config = {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: "0" },
                 },
+                shimmer: {
+                    "100%": {
+                        transform: "translateX(100%)",
+                    },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
@@ -76,7 +81,10 @@ const config = {
             },
         },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [
+        require("tailwindcss-animate"),
+        require("tailwind-scrollbar-hide"),
+    ],
 } satisfies Config;
 
 export default config;

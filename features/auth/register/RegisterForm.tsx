@@ -1,34 +1,86 @@
 "use client";
 
 import Link from "next/link";
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
+import { AxiosError, AxiosResponse, isAxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormLabel } from "@/components/ui/form";
 import FormInput from "@/components/form-elements/FormInput";
+import FullScreenLoading from "@/components/loading/FullScreenLoading";
 
 import {
     RegisterSchema,
     RegisterSchemaType,
     defaultValues,
 } from "./validation";
+import * as authService from "../authService";
+import { ErrorResponse } from "@/features/interfaces";
+import { useToast } from "@/components/ui/use-toast";
+
+interface SuccessResponse {
+    accessToken: string;
+    refreshToken: string;
+}
 
 function RegisterForm() {
+    const { toast } = useToast();
+
+    const register = useMutation<
+        AxiosResponse<SuccessResponse>,
+        AxiosError<ErrorResponse>,
+        RegisterSchemaType
+    >({
+        mutationFn: (data) => authService.register(data),
+    });
+
     const form = useForm<RegisterSchemaType>({
         defaultValues,
         resolver: zodResolver(RegisterSchema),
     });
 
-    const onSubmit = form.handleSubmit((values) => {
-        console.log(values);
+    const onSubmit = form.handleSubmit(async (values) => {
+        try {
+            const res = await register.mutateAsync(values);
+            Cookies.set("refresh", res.data.refreshToken);
+            Cookies.set("bearer", res.data.accessToken);
+            window.location.reload();
+        } catch (error) {
+            if (isAxiosError<ErrorResponse>(error)) {
+                const { message } = error.response?.data || {};
+
+                if (Array.isArray(message))
+                    return message.forEach(({ property, message }) =>
+                        form.setError(property as keyof RegisterSchemaType, {
+                            message,
+                            type: "api_validation_error",
+                        }),
+                    );
+
+                return toast({
+                    title: "Registration Failed",
+                    description: message,
+                    variant: "destructive",
+                });
+            }
+
+            return toast({
+                title: "Registration Failed",
+                description: "Something went wrong, Please try again later.",
+                variant: "destructive",
+            });
+        }
     });
 
     return (
         <Form {...form}>
             <form onSubmit={onSubmit} className="w-full max-w-xl p-4">
-                <Card className="rounded-2xl">
+                <Card className="overflow-hidden rounded-2xl">
+                    {register.isPending && <FullScreenLoading />}
                     <CardHeader>
                         <CardTitle>Create an account</CardTitle>
                     </CardHeader>
@@ -64,7 +116,7 @@ function RegisterForm() {
                             name="password"
                             type="password"
                         />
-                        <Button className="w-full block">Register</Button>
+                        <Button className="block w-full">Register</Button>
                         <div className="flex items-center justify-center">
                             <span>Already have an account?</span>
                             <Link href="/login">
@@ -72,7 +124,7 @@ function RegisterForm() {
                                     variant="link"
                                     type="button"
                                     size="lg"
-                                    className="w-full block font-bold px-2"
+                                    className="block w-full px-2 font-bold"
                                 >
                                     Sign in
                                 </Button>
