@@ -1,7 +1,8 @@
+import Members from "@/features/projects/members";
 import React from "react";
 
 function MembersPage() {
-    return <div>page</div>;
+    return <Members />;
 }
 
 export default MembersPage;

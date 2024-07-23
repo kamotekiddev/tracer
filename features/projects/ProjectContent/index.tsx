@@ -13,19 +13,14 @@ import CompleteSprintModal from "./CompleteSprintModal";
 import { differenceInDays } from "date-fns";
 import { useMemo } from "react";
 import CategoryCard from "./CategoryCard";
+import { useGetProject } from "../useProjectQuery";
 
 interface Props {
     projectId: string;
 }
 
 function ProjectContent({ projectId }: Props) {
-    const { data: project, ...projectState } = useQuery<
-        ProjectWithCompleteDetails,
-        AxiosError<ErrorResponse>
-    >({
-        queryFn: () => projectService.getProjectById(projectId),
-        queryKey: [QueryKeys.PROJECTS, projectId],
-    });
+    const { data: project, ...projectState } = useGetProject(projectId);
 
     const daysRemaining = useMemo(() => {
         if (!project?.currentSprint) return null;
