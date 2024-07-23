@@ -48,11 +48,11 @@ function CreateTicketModal() {
                     <DialogTrigger className="w-full bg-neutral-200 p-2 text-sm font-semibold">
                         Create Issue
                     </DialogTrigger>
-                    <DialogContent className="grid max-h-[700px] w-full max-w-[700px] grid-rows-[auto_1fr_auto] p-0">
+                    <DialogContent className="grid max-h-[700px] w-full max-w-[700px] grid-rows-[auto_1fr_auto] p-2">
                         <DialogHeader className="p-4 pb-0">
                             <DialogTitle>New Task</DialogTitle>
                         </DialogHeader>
-                        <div className="scrollbar-hide space-y-2 overflow-auto p-4">
+                        <div className="space-y-2 overflow-auto p-4 scrollbar-hide">
                             <FormSelectInput
                                 label="Status"
                                 name="status"
