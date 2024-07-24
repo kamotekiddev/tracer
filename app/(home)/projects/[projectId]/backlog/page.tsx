@@ -1,7 +1,7 @@
-import React from "react";
+import Backlog from "@/features/projects/backlog";
 
 function BacklogPage() {
-    return <div>BacklogPage</div>;
+    return <Backlog />;
 }
 
 export default BacklogPage;

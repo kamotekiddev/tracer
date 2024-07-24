@@ -13,7 +13,7 @@ function ProjectSidebarItem({ children, active, ...props }: Props) {
             <Button
                 variant={active ? "secondary" : "ghost"}
                 className={cn(
-                    "block w-full rounded-s-none border-l-4 border-l-transparent text-start",
+                    "block w-full rounded-s-none border-l-4 border-l-transparent text-start hover:bg-transparent hover:text-primary",
                     active && "border-l-primary",
                 )}
             >

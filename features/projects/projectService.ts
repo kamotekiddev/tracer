@@ -17,6 +17,11 @@ export const getProjectById = async (projectId: string) => {
     return res.data;
 };
 
+export const getProjectBacklogs = async (projectId: string) => {
+    const res = await client.get(`/projects/${projectId}/backlogs`);
+    return res.data;
+};
+
 export const createSprint = async (data: CreateSprintRequest) => {
     const res = await client.post("/sprints", data);
     return res.data;

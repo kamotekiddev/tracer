@@ -44,7 +44,7 @@ function ProjectSidebar() {
                     <p className="text-xs font-medium">Software Project</p>
                 </div>
             </div>
-            <nav className="space-y-2">
+            <nav>
                 {links.map((link, idx) => (
                     <ProjectSidebarItem
                         key={idx}

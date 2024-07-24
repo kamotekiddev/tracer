@@ -29,6 +29,7 @@ interface Category {
     name: string;
     projectId: string;
     issues: Issue[];
+    sprintId: string | null;
 }
 
 interface Sprint {
@@ -47,4 +48,19 @@ export interface ProjectWithCompleteDetails
     categories: Category[];
     currentSprintId: string | null;
     currentSprint: Sprint | null;
+}
+
+export interface IssueWithCategory extends Issue {
+    category: Omit<Category, "issues">;
+}
+
+export interface ProjectBackLog {
+    id: string;
+    number: number;
+    startDate: string;
+    endDate: string;
+    completed: boolean;
+    projectId: string;
+    issues: IssueWithCategory[];
+    categories: [];
 }
