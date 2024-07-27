@@ -1,19 +1,14 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
-import * as projectService from "../projectService";
-import { AxiosError } from "axios";
-import { ProjectWithCompleteDetails } from "../projects";
-import { ErrorResponse } from "../../interfaces";
-import { Button } from "@/components/ui/button";
+import { useMemo } from "react";
+import { differenceInDays } from "date-fns";
 import { ClockIcon, EllipsisIcon } from "lucide-react";
-import { QueryKeys } from "@/lib/query-keys";
+
+import { useGetProject } from "../useProjectQuery";
+import { Button } from "@/components/ui/button";
 import StartSprintView from "./StartSprintView";
 import FullScreenLoading from "@/components/loading/FullScreenLoading";
 import CompleteSprintModal from "./CompleteSprintModal";
-import { differenceInDays } from "date-fns";
-import { useMemo } from "react";
 import CategoryCard from "./CategoryCard";
-import { useGetProject } from "../useProjectQuery";
 
 interface Props {
     projectId: string;
@@ -59,7 +54,11 @@ function ProjectContent({ projectId }: Props) {
             </div>
             <div className="flex gap-2">
                 {project?.categories.map((category) => (
-                    <CategoryCard key={category.id} category={category} />
+                    <CategoryCard
+                        key={category.id}
+                        category={category}
+                        sprintId={project.currentSprintId as string}
+                    />
                 ))}
             </div>
         </div>

@@ -1,4 +1,4 @@
-import ProjectContent from "@/features/projects/ProjectContent";
+import ProjectContent from "@/features/projects/project-content";
 
 interface Props {
     params: { projectId: string };

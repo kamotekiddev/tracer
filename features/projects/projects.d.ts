@@ -29,7 +29,6 @@ interface Category {
     name: string;
     projectId: string;
     issues: Issue[];
-    sprintId: string | null;
 }
 
 interface Sprint {
