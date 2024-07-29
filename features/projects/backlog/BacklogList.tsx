@@ -26,6 +26,7 @@ function BacklogList() {
                 <Collapsible
                     key={sprint.id}
                     className="overflow-hidden rounded-lg border"
+                    defaultOpen
                 >
                     <CollapsibleTrigger className="w-full bg-neutral-50 p-4 text-left font-semibold data-[state=open]:bg-neutral-100">
                         Sprint {sprint.number}

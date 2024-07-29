@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Separator } from "@/components/ui/separator";
-import ProjectSidebar from "@/features/projects/ProjectSidebar";
+import ProjectSidebar from "@/features/projects/project-sidebar";
 
 function ProjectLayout({ children }: PropsWithChildren) {
     return (

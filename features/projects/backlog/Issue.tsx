@@ -23,7 +23,7 @@ const IssueIconMap = {
     STORY: <BookIcon size={15} />,
 };
 
-const issueIcon = cva(
+export const issueIconVariants = cva(
     "grid size-6 place-items-center rounded-sm flex-shrink-0",
     {
         variants: {
@@ -56,7 +56,7 @@ function Issue({ issue, categories, members }: Props) {
     return (
         <div className="grid grid-cols-[1fr_auto] items-center gap-2 p-4">
             <div className="flex items-center gap-2">
-                <div className={issueIcon({ variant: issue.type })}>
+                <div className={issueIconVariants({ variant: issue.type })}>
                     {IssueIconMap[issue.type]}
                 </div>
                 <p>{issue.title}</p>
