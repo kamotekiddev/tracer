@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { MoreHorizontalIcon } from "lucide-react";
-import type { Category } from "../projects";
+import type { Category, CategoryWithIssueAndProject } from "../projects";
 import CreateTicketInline from "./CreateTicketInline";
+import IssueCard from "./IssueCard";
 
 interface Props {
-    category: Category;
+    category: CategoryWithIssueAndProject;
     sprintId: string;
 }
 
@@ -18,11 +19,19 @@ function CategoryCard({ category, sprintId }: Props) {
                     <h1>{category.name}</h1>
                     <MoreHorizontalIcon />
                 </div>
-                <div className="group">
+                <div className="group space-y-1 p-1">
+                    {category.issues.map((issue) => (
+                        <IssueCard
+                            key={issue.id}
+                            issue={issue}
+                            project={category.project}
+                        />
+                    ))}
+
                     {!showCreateTicket && (
                         <button
                             onClick={() => setShowCreateTicket((prev) => !prev)}
-                            className="invisible w-full bg-neutral-200 p-2 text-sm font-semibold group-hover:visible"
+                            className="invisible w-full rounded-sm bg-neutral-200 p-2 text-sm font-semibold group-hover:visible"
                         >
                             Create Issue
                         </button>

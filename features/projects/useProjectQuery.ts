@@ -5,7 +5,12 @@ import { queryClient } from "@/providers/QueryProvider";
 import { QueryKeys } from "@/lib/query-keys";
 import * as projectService from "./projectService";
 import { ErrorResponse } from "../interfaces";
-import { Issue, ProjectBackLog, ProjectWithCompleteDetails } from "./projects";
+import {
+    CategoryWithIssueAndProject,
+    Issue,
+    ProjectBackLog,
+    ProjectWithCompleteDetails,
+} from "./projects";
 import { CreateIssueRequest } from "./project-content/CreateTicketInline";
 
 export const useGetProject = (projectId: string) =>
@@ -23,6 +28,18 @@ export const useGetProjectBacklogs = (projectId: string) =>
 export const useCreateIssue = () =>
     useMutation<Issue, AxiosError<ErrorResponse>, CreateIssueRequest>({
         mutationFn: (data) => projectService.createIssue(data),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: [QueryKeys.PROJECT] }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.PROJECT],
+            });
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.PROJECT_CATEGORIES_WITH_ISSUES],
+            });
+        },
+    });
+
+export const useGetProjectCategories = (projectId: string) =>
+    useQuery<CategoryWithIssueAndProject[], AxiosError<ErrorResponse>>({
+        queryFn: () => projectService.getProjectCategories(projectId),
+        queryKey: [QueryKeys.PROJECT_CATEGORIES_WITH_ISSUES, projectId],
     });

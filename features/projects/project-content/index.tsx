@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { differenceInDays } from "date-fns";
 import { ClockIcon, EllipsisIcon } from "lucide-react";
 
-import { useGetProject } from "../useProjectQuery";
+import { useGetProject, useGetProjectCategories } from "../useProjectQuery";
 import { Button } from "@/components/ui/button";
 import StartSprintView from "./StartSprintView";
 import FullScreenLoading from "@/components/loading/FullScreenLoading";
@@ -16,6 +16,8 @@ interface Props {
 
 function ProjectContent({ projectId }: Props) {
     const { data: project, ...projectState } = useGetProject(projectId);
+    const { data: categories, ...categoriesState } =
+        useGetProjectCategories(projectId);
 
     const daysRemaining = useMemo(() => {
         if (!project?.currentSprint) return null;
@@ -28,7 +30,8 @@ function ProjectContent({ projectId }: Props) {
         return `${daysDiff} Day`;
     }, [project?.currentSprint]);
 
-    if (projectState.isLoading) return <FullScreenLoading />;
+    if (projectState.isLoading || categoriesState.isLoading)
+        return <FullScreenLoading />;
     else if (!project?.currentSprintId) return <StartSprintView />;
 
     return (
@@ -53,7 +56,7 @@ function ProjectContent({ projectId }: Props) {
                 <div>Filter by type</div>
             </div>
             <div className="flex gap-2">
-                {project?.categories.map((category) => (
+                {categories?.map((category) => (
                     <CategoryCard
                         key={category.id}
                         category={category}

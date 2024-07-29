@@ -37,3 +37,8 @@ export const createIssue = async (data: CreateIssueRequest) => {
     const res = await client.post("/issues", data);
     return res.data;
 };
+
+export const getProjectCategories = async (projectId: string) => {
+    const res = await client.get(`/projects/${projectId}/categories`);
+    return res.data;
+};

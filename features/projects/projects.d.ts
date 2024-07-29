@@ -13,10 +13,11 @@ export interface Project {
     updatedAt: string;
 }
 
-interface Issue {
+export interface Issue {
     id: string;
     title: string;
     description: null;
+    number: number;
     type: "TASK" | "BUG" | "STORY";
     categoryId: string;
     reporterId: string;
@@ -24,14 +25,18 @@ interface Issue {
     assigneeId: string | null;
     assignee: User | null;
 }
-interface Category {
+export interface Category {
     id: string;
     name: string;
     projectId: string;
+}
+
+export interface CategoryWithIssueAndProject extends Category {
+    project: Project;
     issues: Issue[];
 }
 
-interface Sprint {
+export interface Sprint {
     id: string;
     number: number;
     startDate: string;
