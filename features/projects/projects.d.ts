@@ -25,15 +25,18 @@ export interface Issue {
     assigneeId: string | null;
     assignee: User | null;
 }
+
+export interface IssueWithProject extends Issue {
+    project: Project;
+}
 export interface Category {
     id: string;
     name: string;
     projectId: string;
 }
 
-export interface CategoryWithIssueAndProject extends Category {
-    project: Project;
-    issues: Issue[];
+export interface CategoryWithIssue extends Category {
+    issues: IssueWithProject[];
 }
 
 export interface Sprint {
@@ -49,7 +52,7 @@ export interface ProjectWithCompleteDetails
     extends Omit<Project, "issues" | "members"> {
     members: User[];
     issues: Issue[];
-    categories: Category[];
+    categories: CategoryWithIssue[];
     currentSprintId: string | null;
     currentSprint: Sprint | null;
 }

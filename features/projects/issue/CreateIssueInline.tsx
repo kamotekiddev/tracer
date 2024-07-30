@@ -5,7 +5,7 @@ import { CheckIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateIssue } from "../useProjectQuery";
-import TypeSelection from "./TypeSelection";
+import IssueTypeSelection from "./IssueTypeSelection";
 import { useToast } from "@/components/ui/use-toast";
 import { ErrorResponse } from "@/features/interfaces";
 
@@ -25,7 +25,7 @@ export interface CreateIssueRequest
     type: IssueType;
 }
 
-function CreateTicketInline({
+function CreateIssueInline({
     show,
     close,
     categoryId,
@@ -83,7 +83,7 @@ function CreateTicketInline({
             />
             <div className="flex justify-between gap-2">
                 <div className="w-max">
-                    <TypeSelection
+                    <IssueTypeSelection
                         value={type}
                         onChange={(value) => setType(value)}
                     />
@@ -106,4 +106,4 @@ function CreateTicketInline({
     );
 }
 
-export default CreateTicketInline;
+export default CreateIssueInline;

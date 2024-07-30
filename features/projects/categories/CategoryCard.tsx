@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { MoreHorizontalIcon } from "lucide-react";
-import type { Category, CategoryWithIssueAndProject } from "../projects";
-import CreateTicketInline from "./CreateTicketInline";
-import IssueCard from "./IssueCard";
+import type { CategoryWithIssue } from "../projects";
+import CreateIssueInline from "../issue/CreateIssueInline";
+import IssueCard from "../issue/IssueCard";
+import ViewIssueModal from "../issue/ViewIssueModal";
 
 interface Props {
-    category: CategoryWithIssueAndProject;
+    category: CategoryWithIssue;
     sprintId: string;
 }
 
 function CategoryCard({ category, sprintId }: Props) {
     const [showCreateTicket, setShowCreateTicket] = useState(false);
+    const [issueId, setIssueId] = useState<string>();
 
     return (
         <>
@@ -24,7 +26,7 @@ function CategoryCard({ category, sprintId }: Props) {
                         <IssueCard
                             key={issue.id}
                             issue={issue}
-                            project={category.project}
+                            onOpenIssue={setIssueId}
                         />
                     ))}
 
@@ -36,7 +38,7 @@ function CategoryCard({ category, sprintId }: Props) {
                             Create Issue
                         </button>
                     )}
-                    <CreateTicketInline
+                    <CreateIssueInline
                         show={showCreateTicket}
                         close={() => setShowCreateTicket(false)}
                         categoryId={category.id}
@@ -45,6 +47,10 @@ function CategoryCard({ category, sprintId }: Props) {
                     />
                 </div>
             </div>
+            <ViewIssueModal
+                open={!!issueId}
+                onClose={() => setIssueId(undefined)}
+            />
         </>
     );
 }

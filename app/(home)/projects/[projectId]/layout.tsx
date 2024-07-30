@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
 import { Separator } from "@/components/ui/separator";
-import ProjectSidebar from "@/features/projects/project-sidebar";
+import Sidebar from "@/features/projects/sidebar";
 
 function ProjectLayout({ children }: PropsWithChildren) {
     return (
         <div className="grid grid-cols-[250px_auto_1fr]">
-            <ProjectSidebar />
+            <Sidebar />
             <Separator orientation="vertical" />
             {children}
         </div>

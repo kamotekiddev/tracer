@@ -31,7 +31,7 @@ const createTicketSchema = z.object({
 
 type CreateTicketSchemaType = z.infer<typeof createTicketSchema>;
 
-function CreateTicketModal() {
+function CreateIssueModal() {
     const [openDialog, setOpenDialog] = useState(false);
     const form = useForm<CreateTicketSchemaType>({
         defaultValues: { description: "", status: "", title: "" },
@@ -117,4 +117,4 @@ function CreateTicketModal() {
     );
 }
 
-export default CreateTicketModal;
+export default CreateIssueModal;

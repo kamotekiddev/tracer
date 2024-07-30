@@ -1,23 +1,22 @@
 "use client";
+
 import { useMemo } from "react";
 import { differenceInDays } from "date-fns";
 import { ClockIcon, EllipsisIcon } from "lucide-react";
 
-import { useGetProject, useGetProjectCategories } from "../useProjectQuery";
+import { useGetProject } from "../useProjectQuery";
 import { Button } from "@/components/ui/button";
-import StartSprintView from "./StartSprintView";
+import StartSprintView from "../sprint/StartSprintView";
 import FullScreenLoading from "@/components/loading/FullScreenLoading";
-import CompleteSprintModal from "./CompleteSprintModal";
-import CategoryCard from "./CategoryCard";
+import CompleteSprintModal from "../sprint/CompleteSprintModal";
+import CategoryCard from "../categories/CategoryCard";
 
 interface Props {
     projectId: string;
 }
 
-function ProjectContent({ projectId }: Props) {
+function Project({ projectId }: Props) {
     const { data: project, ...projectState } = useGetProject(projectId);
-    const { data: categories, ...categoriesState } =
-        useGetProjectCategories(projectId);
 
     const daysRemaining = useMemo(() => {
         if (!project?.currentSprint) return null;
@@ -30,8 +29,7 @@ function ProjectContent({ projectId }: Props) {
         return `${daysDiff} Day`;
     }, [project?.currentSprint]);
 
-    if (projectState.isLoading || categoriesState.isLoading)
-        return <FullScreenLoading />;
+    if (projectState.isLoading) return <FullScreenLoading />;
     else if (!project?.currentSprintId) return <StartSprintView />;
 
     return (
@@ -56,7 +54,7 @@ function ProjectContent({ projectId }: Props) {
                 <div>Filter by type</div>
             </div>
             <div className="flex gap-2">
-                {categories?.map((category) => (
+                {project?.categories.map((category) => (
                     <CategoryCard
                         key={category.id}
                         category={category}
@@ -68,4 +66,4 @@ function ProjectContent({ projectId }: Props) {
     );
 }
 
-export default ProjectContent;
+export default Project;

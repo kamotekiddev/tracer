@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/select";
 import { BookIcon, BugIcon, CheckSquareIcon, LucideIcon } from "lucide-react";
 import { issueIconVariants } from "../backlog/Issue";
-import { IssueType } from "./CreateTicketInline";
+import { IssueType } from "./CreateIssueInline";
 
 const data: {
     label: string;
@@ -24,7 +24,7 @@ interface Props {
     onChange: (value: IssueType) => void;
 }
 
-function TypeSelection({ value, onChange }: Props) {
+function IssueTypeSelection({ value, onChange }: Props) {
     return (
         <Select value={value} onValueChange={onChange}>
             <SelectTrigger>
@@ -54,4 +54,4 @@ function TypeSelection({ value, onChange }: Props) {
     );
 }
 
-export default TypeSelection;
+export default IssueTypeSelection;

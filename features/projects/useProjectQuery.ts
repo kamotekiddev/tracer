@@ -2,16 +2,11 @@ import { AxiosError } from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { queryClient } from "@/providers/QueryProvider";
-import { QueryKeys } from "@/lib/query-keys";
 import * as projectService from "./projectService";
+import { QueryKeys } from "@/lib/query-keys";
 import { ErrorResponse } from "../interfaces";
-import {
-    CategoryWithIssueAndProject,
-    Issue,
-    ProjectBackLog,
-    ProjectWithCompleteDetails,
-} from "./projects";
-import { CreateIssueRequest } from "./project-content/CreateTicketInline";
+import { Issue, ProjectBackLog, ProjectWithCompleteDetails } from "./projects";
+import { CreateIssueRequest } from "./issue/CreateIssueInline";
 
 export const useGetProject = (projectId: string) =>
     useQuery<ProjectWithCompleteDetails, AxiosError<ErrorResponse>>({
@@ -28,18 +23,8 @@ export const useGetProjectBacklogs = (projectId: string) =>
 export const useCreateIssue = () =>
     useMutation<Issue, AxiosError<ErrorResponse>, CreateIssueRequest>({
         mutationFn: (data) => projectService.createIssue(data),
-        onSuccess: () => {
+        onSuccess: () =>
             queryClient.invalidateQueries({
                 queryKey: [QueryKeys.PROJECT],
-            });
-            queryClient.invalidateQueries({
-                queryKey: [QueryKeys.PROJECT_CATEGORIES_WITH_ISSUES],
-            });
-        },
-    });
-
-export const useGetProjectCategories = (projectId: string) =>
-    useQuery<CategoryWithIssueAndProject[], AxiosError<ErrorResponse>>({
-        queryFn: () => projectService.getProjectCategories(projectId),
-        queryKey: [QueryKeys.PROJECT_CATEGORIES_WITH_ISSUES, projectId],
+            }),
     });

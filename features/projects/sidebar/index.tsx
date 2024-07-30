@@ -1,18 +1,17 @@
 "use client";
 
+import { AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useParams } from "next/navigation";
 
 import ProjectSidebarItem from "./ProjectSidebarItem";
 
 import * as projectService from "../projectService";
-import { AxiosError, AxiosResponse } from "axios";
 import { ProjectWithCompleteDetails } from "../projects";
 import { ErrorResponse } from "@/features/interfaces";
-import { Separator } from "@/components/ui/separator";
 import { FolderKanbanIcon } from "lucide-react";
 
-function ProjectSidebar() {
+function Sidebar() {
     const pathname = usePathname();
     const { projectId } = useParams();
 
@@ -59,4 +58,4 @@ function ProjectSidebar() {
     );
 }
 
-export default ProjectSidebar;
+export default Sidebar;

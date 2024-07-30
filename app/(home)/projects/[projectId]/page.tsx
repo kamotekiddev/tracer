@@ -1,11 +1,11 @@
-import ProjectContent from "@/features/projects/project-content";
+import Project from "@/features/projects/project";
 
 interface Props {
     params: { projectId: string };
 }
 
 function ViewProjectPage({ params }: Props) {
-    return <ProjectContent projectId={params.projectId} />;
+    return <Project projectId={params.projectId} />;
 }
 
 export default ViewProjectPage;
