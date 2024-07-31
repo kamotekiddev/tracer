@@ -33,7 +33,7 @@ export const completeSprint = async (projectId: string) => {
     return res.data;
 };
 
-export const createIssue = async (data: CreateIssueRequest) => {
-    const res = await client.post("/issues", data);
+export const getProjectMembers = async (projectId: string) => {
+    const res = await client.get(`/projects/${projectId}/members`);
     return res.data;
 };

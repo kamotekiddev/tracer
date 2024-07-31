@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IssueWithProject } from "../projects";
+import { IssueWithProject } from "./issue.types";
 
 interface Props {
     issue: IssueWithProject;
@@ -12,7 +12,7 @@ function IssueCard({ issue, onOpenIssue }: Props) {
             onClick={() => onOpenIssue(issue.id)}
             className="group/card cursor-pointer space-y-2 rounded-sm bg-white p-4 transition hover:bg-neutral-200"
         >
-            <h3 className="group-hover/card:underline">{issue.title}</h3>
+            <h3 className="group-hover/card:underline">{issue.summary}</h3>
             <div className="flex items-center justify-between gap-4">
                 <span className="font-semibold">
                     {issue.project.key}-{issue.number}

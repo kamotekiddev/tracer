@@ -1,6 +1,6 @@
 import { BookIcon, BugIcon, CircleCheckBigIcon } from "lucide-react";
 
-import { Category, IssueWithCategory } from "../projects";
+import { Category, IssueWithCategory } from "../projects.types";
 import { cva } from "class-variance-authority";
 import {
     Select,

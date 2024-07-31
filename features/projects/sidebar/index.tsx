@@ -7,7 +7,7 @@ import { usePathname, useParams } from "next/navigation";
 import ProjectSidebarItem from "./ProjectSidebarItem";
 
 import * as projectService from "../projectService";
-import { ProjectWithCompleteDetails } from "../projects";
+import { ProjectWithCompleteDetails } from "../projects.types";
 import { ErrorResponse } from "@/features/interfaces";
 import { FolderKanbanIcon } from "lucide-react";
 

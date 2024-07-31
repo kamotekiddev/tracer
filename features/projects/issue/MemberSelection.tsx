@@ -36,7 +36,7 @@ function MemberSelection({ selectedMember, members, onSelectMember }: Props) {
                                 UA
                             </AvatarFallback>
                         </Avatar>
-                        <span className="font-medium group-hover:text-primary">
+                        <span className="group-hover:text-primary">
                             Unassigned
                         </span>
                     </div>
@@ -61,7 +61,7 @@ function MemberSelection({ selectedMember, members, onSelectMember }: Props) {
                                         {memberInitial}
                                     </AvatarFallback>
                                 </Avatar>
-                                <span className="font-medium group-hover:text-primary">
+                                <span className="group-hover:text-primary">
                                     {[
                                         member.firstName,
                                         member.middleName,

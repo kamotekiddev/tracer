@@ -1,4 +1,5 @@
 import { User } from "../interfaces/user";
+import { Issue, IssueWithProject } from "./issue/issue.types";
 
 export interface Project {
     id: string;
@@ -13,22 +14,6 @@ export interface Project {
     updatedAt: string;
 }
 
-export interface Issue {
-    id: string;
-    title: string;
-    description: null;
-    number: number;
-    type: "TASK" | "BUG" | "STORY";
-    categoryId: string;
-    reporterId: string;
-    reporter: User;
-    assigneeId: string | null;
-    assignee: User | null;
-}
-
-export interface IssueWithProject extends Issue {
-    project: Project;
-}
 export interface Category {
     id: string;
     name: string;

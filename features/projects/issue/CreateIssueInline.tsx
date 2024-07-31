@@ -4,10 +4,11 @@ import { CheckIcon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreateIssue } from "../useProjectQuery";
 import IssueTypeSelection from "./IssueTypeSelection";
 import { useToast } from "@/components/ui/use-toast";
+
 import { ErrorResponse } from "@/features/interfaces";
+import { useCreateIssue } from "./useIssueQuery";
 
 interface Props {
     show: boolean;
@@ -21,7 +22,7 @@ export type IssueType = "BUG" | "TASK" | "STORY";
 
 export interface CreateIssueRequest
     extends Pick<Props, "categoryId" | "projectId" | "sprintId"> {
-    title: string;
+    summary: string;
     type: IssueType;
 }
 
@@ -46,7 +47,7 @@ function CreateIssueInline({
 
         try {
             await createIssue.mutateAsync({
-                title: summary,
+                summary,
                 type: type,
                 projectId,
                 categoryId,
@@ -54,7 +55,6 @@ function CreateIssueInline({
             });
 
             toast({ title: "Task Added", description: "New task added." });
-
             setSummary("");
             setType("TASK");
 

@@ -18,7 +18,7 @@ import EmptyState from "@/components/EmptyState";
 
 import * as projectService from "./projectService";
 import { type ErrorResponse } from "../interfaces";
-import { type Project } from "./projects";
+import { type Project } from "./projects.types";
 import CreateProjectModal from "./CreateProjectModal";
 import { useState } from "react";
 
