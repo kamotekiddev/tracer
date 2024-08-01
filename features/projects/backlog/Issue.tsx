@@ -59,7 +59,7 @@ function Issue({ issue, categories, members }: Props) {
                 <div className={issueIconVariants({ variant: issue.type })}>
                     {IssueIconMap[issue.type]}
                 </div>
-                <p>{issue.title}</p>
+                <p>{issue.summary}</p>
             </div>
             <div className="flex min-w-[400px] items-center gap-2">
                 <Select value={issue.categoryId}>
