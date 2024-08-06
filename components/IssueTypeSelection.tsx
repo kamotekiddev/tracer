@@ -6,8 +6,8 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { BookIcon, BugIcon, CheckSquareIcon, LucideIcon } from "lucide-react";
-import { issueIconVariants } from "../backlog/Issue";
-import { IssueType } from "./CreateIssueInline";
+import { issueIconVariants } from "../features/projects/backlog/Issue";
+import { IssueType } from "../features/projects/issue/CreateIssueInline";
 
 const data: {
     label: string;

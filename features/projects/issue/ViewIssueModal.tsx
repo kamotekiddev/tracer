@@ -1,16 +1,18 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { useGetProjectMembers } from "../useProjectQuery";
-import { Textarea } from "@/components/ui/textarea";
 
 import MemberSelection from "./MemberSelection";
-import IssueTypeSelection from "./IssueTypeSelection";
 
 import { useGetIssueById } from "./useIssueQuery";
 import FullScreenLoading from "@/components/loading/FullScreenLoading";
-import IssueInput from "./IssueInput";
+import IssueSummary from "./IssueSummary";
+import IssueDescription from "./IssueDescription";
+import IssueType from "./IssueType";
+import IssueAssignee from "./IssueAssignee";
 
 interface Props {
     issueId: string;
@@ -37,20 +39,6 @@ function ViewIssueModal({ open, onClose, issueId }: Props) {
     const { data: projectMembers, ...projectMembersState } =
         useGetProjectMembers(projectId);
 
-    const [summary, setSummary] = useState(issue?.summary || "");
-    const [type, setType] = useState(issue?.type || "TASK");
-    const [assignee, setAssignee] = useState(issue?.assigneeId || "unassigned");
-    const [reporter, setReporter] = useState(issue?.reporterId || "unassigned");
-    const [description, setDescription] = useState(issue?.description || "");
-
-    useEffect(() => {
-        if (!issue) return;
-        setSummary(issue.summary);
-        setDescription(issue.description || "");
-        setAssignee(issue.assigneeId || "unassigned");
-        setType(issue.type);
-    }, [issue]);
-
     if (issueState.isLoading || projectMembersState.isLoading)
         return <FullScreenLoading />;
     else if (!issue) return null;
@@ -68,42 +56,49 @@ function ViewIssueModal({ open, onClose, issueId }: Props) {
                         </DialogTitle>
                     </div>
                     <div className="space-y-4 p-4">
-                        <IssueInput
-                            value={summary}
-                            onChange={(e) => setSummary(e.target.value)}
-                            onSave={() => {}}
-                        />
+                        <IssueSummary issue={issue} />
                         <WrapperWithLabel label="Description">
-                            <Textarea
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                placeholder="Description"
-                            />
+                            <IssueDescription issue={issue} />
                         </WrapperWithLabel>
+                        <Tabs defaultValue="comments" className="w-[400px]">
+                            <TabsList className="bg-transparent">
+                                <TabsTrigger
+                                    value="comments"
+                                    className="data-[state=active]:bg-neutral-100"
+                                >
+                                    Comments
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="history"
+                                    className="data-[state=active]:bg-neutral-100"
+                                >
+                                    History
+                                </TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="comments">
+                                {/* Comments will go here */}
+                            </TabsContent>
+                            <TabsContent value="history">
+                                {/* History will go here */}
+                            </TabsContent>
+                        </Tabs>
                     </div>
                     <div className="space-y-2 p-4">
                         <WrapperWithLabel label="Type">
-                            <IssueTypeSelection
-                                value={type}
-                                onChange={setType}
-                            />
+                            <IssueType issue={issue} />
                         </WrapperWithLabel>
                         <WrapperWithLabel label="Assignee">
-                            <MemberSelection
-                                selectedMember={assignee}
-                                onSelectMember={setAssignee}
+                            <IssueAssignee
+                                issue={issue}
                                 members={projectMembers || []}
                             />
                         </WrapperWithLabel>
                         <WrapperWithLabel label="Reporter">
-                            <MemberSelection
-                                selectedMember={reporter}
-                                onSelectMember={setReporter}
+                            <IssueAssignee
+                                issue={issue}
                                 members={projectMembers || []}
                             />
                         </WrapperWithLabel>
-                        <div>{/* Attachments */}</div>
-                        <div>{/* Activities */}</div>
                     </div>
                 </div>
             </DialogContent>

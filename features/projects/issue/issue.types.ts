@@ -4,7 +4,7 @@ import { Project } from "../projects.types";
 export interface Issue {
     id: string;
     summary: string;
-    description: null;
+    description: string | null;
     number: number;
     type: "TASK" | "BUG" | "STORY";
     categoryId: string;

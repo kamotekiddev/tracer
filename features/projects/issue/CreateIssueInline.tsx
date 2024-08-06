@@ -4,7 +4,7 @@ import { CheckIcon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import IssueTypeSelection from "./IssueTypeSelection";
+import IssueTypeSelection from "../../../components/IssueTypeSelection";
 import { useToast } from "@/components/ui/use-toast";
 
 import { ErrorResponse } from "@/features/interfaces";
