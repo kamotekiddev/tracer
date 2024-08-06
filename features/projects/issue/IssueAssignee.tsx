@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Issue } from "./issue.types";
+import { IssueWithProject } from "./issue.types";
 import MemberSelection from "./MemberSelection";
 import { User } from "@/features/interfaces/user";
 
 interface Props {
-    issue: Issue;
+    issue: IssueWithProject;
     members: User[];
 }
 

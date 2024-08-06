@@ -1,9 +1,9 @@
 import IssueTypeSelection from "@/components/IssueTypeSelection";
-import { Issue } from "./issue.types";
+import { IssueWithProject } from "./issue.types";
 import { useState } from "react";
 
 interface Props {
-    issue: Issue;
+    issue: IssueWithProject;
 }
 
 function IssueType({ issue }: Props) {

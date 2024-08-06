@@ -11,16 +11,19 @@ export const useGetProject = (projectId: string) =>
     useQuery<ProjectWithCompleteDetails, AxiosError<ErrorResponse>>({
         queryFn: () => projectService.getProjectById(projectId),
         queryKey: [QueryKeys.PROJECT, projectId],
+        enabled: !!projectId,
     });
 
 export const useGetProjectBacklogs = (projectId: string) =>
     useQuery<ProjectBackLog[], AxiosError<ErrorResponse>>({
         queryFn: () => projectService.getProjectBacklogs(projectId),
         queryKey: [QueryKeys.PROJECT_BACKLOGS, projectId],
+        enabled: !!projectId,
     });
 
 export const useGetProjectMembers = (projectId: string) =>
     useQuery<User[], AxiosError<ErrorResponse>>({
         queryFn: () => projectService.getProjectMembers(projectId),
         queryKey: [QueryKeys.PROJECT_MEMBERS, projectId],
+        enabled: !!projectId,
     });

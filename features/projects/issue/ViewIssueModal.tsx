@@ -1,18 +1,13 @@
 import { PropsWithChildren } from "react";
-import { useParams } from "next/navigation";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { useGetProjectMembers } from "../useProjectQuery";
-
-import MemberSelection from "./MemberSelection";
-
 import { useGetIssueById } from "./useIssueQuery";
+
 import FullScreenLoading from "@/components/loading/FullScreenLoading";
 import IssueSummary from "./IssueSummary";
 import IssueDescription from "./IssueDescription";
-import IssueType from "./IssueType";
-import IssueAssignee from "./IssueAssignee";
+import IssueDetails from "./IssueDetails";
 
 interface Props {
     issueId: string;
@@ -24,7 +19,7 @@ interface WrapperWithLabelProps extends PropsWithChildren {
     label: string;
 }
 
-function WrapperWithLabel({ label, children }: WrapperWithLabelProps) {
+export function WrapperWithLabel({ label, children }: WrapperWithLabelProps) {
     return (
         <div className="space-y-1">
             <label className="text-sm font-medium">{label}</label>
@@ -34,13 +29,9 @@ function WrapperWithLabel({ label, children }: WrapperWithLabelProps) {
 }
 
 function ViewIssueModal({ open, onClose, issueId }: Props) {
-    const { projectId } = useParams<{ projectId: string }>();
     const { data: issue, ...issueState } = useGetIssueById(issueId);
-    const { data: projectMembers, ...projectMembersState } =
-        useGetProjectMembers(projectId);
 
-    if (issueState.isLoading || projectMembersState.isLoading)
-        return <FullScreenLoading />;
+    if (issueState.isLoading) return <FullScreenLoading />;
     else if (!issue) return null;
 
     return (
@@ -84,21 +75,7 @@ function ViewIssueModal({ open, onClose, issueId }: Props) {
                         </Tabs>
                     </div>
                     <div className="space-y-2 p-4">
-                        <WrapperWithLabel label="Type">
-                            <IssueType issue={issue} />
-                        </WrapperWithLabel>
-                        <WrapperWithLabel label="Assignee">
-                            <IssueAssignee
-                                issue={issue}
-                                members={projectMembers || []}
-                            />
-                        </WrapperWithLabel>
-                        <WrapperWithLabel label="Reporter">
-                            <IssueAssignee
-                                issue={issue}
-                                members={projectMembers || []}
-                            />
-                        </WrapperWithLabel>
+                        <IssueDetails issueId={issueId} />
                     </div>
                 </div>
             </DialogContent>
