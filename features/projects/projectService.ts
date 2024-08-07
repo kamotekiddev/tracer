@@ -37,3 +37,13 @@ export const getProjectMembers = async (projectId: string) => {
     const res = await client.get(`/projects/${projectId}/members`);
     return res.data;
 };
+
+export const getProjectCategories = async (projectId: string) => {
+    const res = await client.get(`/projects/${projectId}/categories`);
+    return res.data;
+};
+
+export const getProjectSprints = async (projectId: string) => {
+    const res = await client.get(`/projects/${projectId}/sprints`);
+    return res.data;
+};

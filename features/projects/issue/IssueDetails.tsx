@@ -6,12 +6,12 @@ import {
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-import IssueType from "./IssueType";
 import IssueAssignee from "./IssueAssignee";
 import { WrapperWithLabel } from "./ViewIssueModal";
 import { useGetIssueById } from "./useIssueQuery";
 import IssueReporter from "./IssueReporter";
-import { useGetProjectMembers } from "../useProjectQuery";
+import { useGetProjectMembers, useGetProjectSprints } from "../useProjectQuery";
+import IssueSprint from "./IssueSprint";
 
 interface Props {
     issueId: string;
@@ -20,6 +20,9 @@ interface Props {
 function IssueDetails({ issueId }: Props) {
     const { data: issue } = useGetIssueById(issueId);
     const { data: projectMembers } = useGetProjectMembers(
+        issue?.project.id || "",
+    );
+    const { data: projectWithSprints } = useGetProjectSprints(
         issue?.project.id || "",
     );
 
@@ -32,9 +35,6 @@ function IssueDetails({ issueId }: Props) {
                 <ChevronDown className="transition" />
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-4 p-4">
-                <WrapperWithLabel label="Type">
-                    <IssueType issue={issue} />
-                </WrapperWithLabel>
                 <WrapperWithLabel label="Assignee">
                     <IssueAssignee
                         issue={issue}
@@ -45,6 +45,12 @@ function IssueDetails({ issueId }: Props) {
                     <IssueReporter
                         issue={issue}
                         members={projectMembers || []}
+                    />
+                </WrapperWithLabel>
+                <WrapperWithLabel label="Sprint">
+                    <IssueSprint
+                        issue={issue}
+                        projectWithSprints={projectWithSprints}
                     />
                 </WrapperWithLabel>
             </CollapsibleContent>

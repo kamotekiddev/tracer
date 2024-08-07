@@ -1,5 +1,5 @@
 import { User } from "@/features/interfaces/user";
-import { Project } from "../projects.types";
+import { Project, Sprint } from "../projects.types";
 
 export interface Issue {
     id: string;
@@ -9,6 +9,7 @@ export interface Issue {
     type: "TASK" | "BUG" | "STORY";
     categoryId: string;
     reporterId: string;
+    sprintId: string;
     reporter: User;
     assigneeId: string | null;
     assignee: User | null;
@@ -16,4 +17,5 @@ export interface Issue {
 
 export interface IssueWithProject extends Issue {
     project: Project;
+    sprint: Sprint;
 }

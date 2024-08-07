@@ -33,6 +33,10 @@ export interface Sprint {
     projectId: string;
 }
 
+export interface ProjectWithSprints extends Project {
+    sprints: Sprint[];
+}
+
 export interface ProjectWithCompleteDetails
     extends Omit<Project, "issues" | "members"> {
     members: User[];
