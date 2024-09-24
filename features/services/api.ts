@@ -1,42 +1,46 @@
-import { fromUnixTime, isBefore } from "date-fns";
-import axios, { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
+import axios, { AxiosResponse } from "axios";
+
+import { isJwtTokenExpired } from "@/lib/utils";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 const client = axios.create({ baseURL });
 
-const refreshToken = async (refreshToken: string) => {
+const refreshUserToken = async (refreshToken: string) => {
+    const isRefreshTokenExpired = isJwtTokenExpired(refreshToken);
+
+    if (isRefreshTokenExpired) {
+        Cookies.remove("refresh");
+        return Cookies.remove("bearer");
+    }
+
     const response: AxiosResponse<{
         accessToken: string;
     }> = await axios.patch(`${baseURL}/auth/refresh`, {
         refreshToken,
     });
 
-    const accessToken = response.data.accessToken;
-    Cookies.set("bearer", response.data.accessToken);
+    const newAccessToken = response.data.accessToken;
+    Cookies.set("bearer", newAccessToken);
 
-    return accessToken;
+    return newAccessToken;
 };
 
 client.interceptors.request.use(
     async (req) => {
-        const token = Cookies.get("bearer");
-        const refresh = Cookies.get("refresh");
+        const accessToken = Cookies.get("bearer");
+        const refreshToken = Cookies.get("refresh");
 
-        if (!token) return req;
-        req.headers.Authorization = `Bearer ${token}`;
-
-        if (!refresh) return req;
-
-        const { exp } = jwtDecode(token);
-        const expiration = fromUnixTime(exp!);
-        const isExpired = isBefore(expiration, new Date());
-
-        if (!isExpired) return req;
-
-        const accessToken = await refreshToken(refresh);
+        if (!accessToken) return req;
         req.headers.Authorization = `Bearer ${accessToken}`;
+
+        if (!refreshToken) return req;
+        const isAcessTokenExpired = isJwtTokenExpired(accessToken);
+
+        if (!isAcessTokenExpired) return req;
+
+        const newAccessToken = await refreshUserToken(refreshToken);
+        req.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return req;
     },
