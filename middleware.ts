@@ -4,15 +4,15 @@ import { NextRequest } from "next/server";
 const unAuthRoutes = ["/login", "/register"];
 
 export function middleware(req: NextRequest) {
-    const bearer = req.cookies.get("bearer")?.value;
+    const token = req.cookies.get("bearer")?.value;
     const pathname = req.nextUrl.pathname;
 
     const authRoute = !unAuthRoutes.some((path) => pathname.startsWith(path));
 
-    if (authRoute && !bearer)
+    if (authRoute && !token)
         return NextResponse.redirect(new URL("/login", req.url));
 
-    if (bearer && !authRoute)
+    if (token && !authRoute)
         return NextResponse.redirect(new URL("/", req.url));
 
     return NextResponse.next();
