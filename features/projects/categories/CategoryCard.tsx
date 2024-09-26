@@ -16,7 +16,7 @@ function CategoryCard({ category, sprintId }: Props) {
 
     return (
         <>
-            <div className="grid min-w-[300px] grid-rows-[auto_1fr] overflow-hidden rounded-lg border bg-neutral-50">
+            <div className="grid w-full max-w-[300px] grid-rows-[auto_1fr] overflow-hidden rounded-lg border bg-neutral-50">
                 <div className="flex items-center justify-between gap-4 bg-neutral-100 p-2 font-semibold">
                     <h1>{category.name}</h1>
                     <MoreHorizontalIcon />
