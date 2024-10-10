@@ -19,3 +19,24 @@ export interface IssueWithProject extends Issue {
     project: Project;
     sprint: Sprint;
 }
+
+export enum UpdateIssueEvent {
+    SUMMARY_CHANGE = "SUMMARY_CHANGE",
+    DESCRIPTION_CHANGE = "DESCRIPTION_CHANGE",
+    TYPE_CHANGE = "TYPE_CHANGE",
+    CATEGORY_CHANGE = "CATEGORY_CHANGE",
+    ASSIGNEE_CHANGE = "ASSIGNEE_CHANGE",
+    SPRINT_CHANGE = "SPRINT_CHANGE",
+}
+
+export interface IssueHistory {
+    id: string;
+    event: UpdateIssueEvent;
+    oldData: string;
+    changes: string;
+    createdAt: string;
+    updated: string;
+    userId: string;
+    issueId: string;
+    user: User;
+}
