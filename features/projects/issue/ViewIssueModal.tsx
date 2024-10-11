@@ -9,7 +9,7 @@ import IssueSummary from "./IssueSummary";
 import IssueDescription from "./IssueDescription";
 import IssueDetails from "./IssueDetails";
 import IssueCategory from "./IssueCategory";
-import IssueType from "./IssueType";
+import IssueTypeSelector from "./IssueType";
 import IssueHistory from "./IssueHistory";
 
 interface Props {
@@ -80,7 +80,7 @@ function ViewIssueModal({ open, onClose, issueId }: Props) {
                     <div className="space-y-4 p-4">
                         <div className="flex gap-4">
                             <IssueCategory issue={issue} />
-                            <IssueType issue={issue} />
+                            <IssueTypeSelector issue={issue} />
                         </div>
                         <IssueDetails issueId={issueId} />
                     </div>
