@@ -29,8 +29,8 @@ function IssueSummary({ issue }: Props) {
                 updateEvent: UpdateIssueEvent.SUMMARY_CHANGE,
             });
             toast({
-                title: "Summary Updated",
-                description: "Summary has been successfully updated.",
+                title: "Issue Updated",
+                description: "Issue has been successfully updated.",
             });
             setShowEditor(false);
         } catch (error) {

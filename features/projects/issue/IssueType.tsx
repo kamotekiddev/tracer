@@ -27,10 +27,9 @@ function IssueTypeSelector({ issue }: Props) {
                 type: issueType,
                 updateEvent: UpdateIssueEvent.TYPE_CHANGE,
             });
-
             toast({
-                title: "Type Updated",
-                description: "Type has been successfully updated.",
+                title: "Issue Updated",
+                description: "Issue has been successfully updated.",
             });
         } catch (error) {
             if (isAxiosError<ErrorResponse>(error)) {
