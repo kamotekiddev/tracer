@@ -4,7 +4,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { ErrorResponse } from "@/features/interfaces";
 import * as issueService from "./issueService";
 import * as userService from "@/features/services/userService";
-import { Issue, IssueHistory, IssueWithProject } from "./issue.types";
+import {
+    Issue,
+    IssueHistory,
+    IssueWithProject,
+    UpdateIssueRequest,
+} from "./issue.types";
 import { QueryKeys } from "@/lib/query-keys";
 import { queryClient } from "@/providers/QueryProvider";
 import { CreateIssueRequest } from "./CreateIssueInline";
@@ -45,4 +50,20 @@ export const useGetIssueCategory = (categoryId: string) =>
         queryFn: () => issueService.getCategoryById(categoryId),
         queryKey: [QueryKeys.CATEGORY, categoryId],
         enabled: !!categoryId,
+    });
+
+export const useUpdateIssue = () =>
+    useMutation<Issue, AxiosError<ErrorResponse>, UpdateIssueRequest>({
+        mutationFn: (data) => issueService.updateIssue(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.PROJECT],
+            });
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.ISSUE],
+            });
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.ISSUE_HISTORY],
+            });
+        },
     });

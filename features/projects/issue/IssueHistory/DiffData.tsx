@@ -49,7 +49,7 @@ export default function DiffData({ data, event }: ChangesProps) {
     if (event === UpdateIssueEvent.SUMMARY_CHANGE)
         return <div className="text-sm">{parsedData.summary}</div>;
     if (event === UpdateIssueEvent.TYPE_CHANGE)
-        return <div className="text-sm">{parsedData.type}</div>;
+        return <Badge variant="secondary">{parsedData.type}</Badge>;
     if (event === UpdateIssueEvent.ASSIGNEE_CHANGE)
         return <Assignee user={assignee} />;
     if (event === UpdateIssueEvent.CATEGORY_CHANGE)

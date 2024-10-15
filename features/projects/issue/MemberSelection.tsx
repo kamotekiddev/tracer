@@ -30,16 +30,7 @@ function MemberSelection({ selectedMember, members, onSelectMember }: Props) {
                     </div>
                 )}
                 <SelectItem value="unassigned">
-                    <div className="group flex items-center gap-2">
-                        <Avatar className="size-7">
-                            <AvatarFallback className="bg-primary text-xs font-medium uppercase text-primary-foreground">
-                                UA
-                            </AvatarFallback>
-                        </Avatar>
-                        <span className="group-hover:text-primary">
-                            Unassigned
-                        </span>
-                    </div>
+                    <span className="hover:text-primary">Unassigned</span>
                 </SelectItem>
                 {members.map((member) => {
                     const cleanMemberNames = [

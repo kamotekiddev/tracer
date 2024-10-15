@@ -40,3 +40,8 @@ export interface IssueHistory {
     issueId: string;
     user: User;
 }
+
+export interface UpdateIssueRequest extends Partial<Issue> {
+    issueId: string;
+    updateEvent: UpdateIssueEvent;
+}

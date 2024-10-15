@@ -2,7 +2,11 @@ import { useMemo, useState } from "react";
 
 import Select from "@/components/form-elements/select";
 import { ProjectWithSprints } from "../projects.types";
-import { IssueWithProject } from "./issue.types";
+import { IssueWithProject, UpdateIssueEvent } from "./issue.types";
+import { useUpdateIssue } from "./useIssueQuery";
+import { useToast } from "@/components/ui/use-toast";
+import { isAxiosError } from "axios";
+import { ErrorResponse } from "@/features/interfaces";
 
 interface Props {
     issue: IssueWithProject;
@@ -10,8 +14,11 @@ interface Props {
 }
 
 function IssueSprint({ issue, projectWithSprints }: Props) {
+    const { toast } = useToast();
     const [sprintId, setSprintId] = useState(issue.sprintId);
     const { sprints, key: projectKey } = projectWithSprints || {};
+
+    const updateIssue = useUpdateIssue();
 
     const sprintsOptions = useMemo(() => {
         if (!sprints || !projectKey) return [];
@@ -22,10 +29,45 @@ function IssueSprint({ issue, projectWithSprints }: Props) {
         }));
     }, [sprints, projectKey]);
 
+    const handleChangeIssueSprint = async (newSprintId: string) => {
+        try {
+            setSprintId(newSprintId);
+            if (newSprintId === issue.sprintId) return;
+
+            await updateIssue.mutateAsync({
+                issueId: issue.id,
+                updateEvent: UpdateIssueEvent.SPRINT_CHANGE,
+                sprintId: newSprintId,
+            });
+
+            toast({
+                title: "Update Failed",
+                description: "Something went wrong, Please try again alter",
+                variant: "destructive",
+            });
+        } catch (error) {
+            if (isAxiosError<ErrorResponse>(error)) {
+                const { message } = error.response?.data || {};
+                if (typeof message === "string")
+                    return toast({
+                        title: "Update Failed",
+                        description: message,
+                        variant: "destructive",
+                    });
+            }
+
+            toast({
+                title: "Update Failed",
+                description: "Something went wrong, Please try again alter",
+                variant: "destructive",
+            });
+        }
+    };
+
     return (
         <Select
             value={sprintId}
-            onValueChange={setSprintId}
+            onValueChange={handleChangeIssueSprint}
             data={sprintsOptions}
         />
     );
