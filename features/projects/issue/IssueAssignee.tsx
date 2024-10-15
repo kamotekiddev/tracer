@@ -25,7 +25,9 @@ function IssueAssignee({ issue, members }: Props) {
             await updateIssue.mutateAsync({
                 issueId: issue.id,
                 updateEvent: UpdateIssueEvent.ASSIGNEE_CHANGE,
-                assigneeId: newAssigneeId,
+                ...(newAssigneeId !== "unassigned" && {
+                    assigneeId: newAssigneeId,
+                }),
             });
 
             toast({
