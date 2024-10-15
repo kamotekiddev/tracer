@@ -57,6 +57,9 @@ export const useUpdateIssue = () =>
         mutationFn: (data) => issueService.updateIssue(data),
         onSuccess: () => {
             queryClient.invalidateQueries({
+                queryKey: [QueryKeys.PROJECT],
+            });
+            queryClient.invalidateQueries({
                 queryKey: [QueryKeys.ISSUE],
             });
             queryClient.invalidateQueries({
