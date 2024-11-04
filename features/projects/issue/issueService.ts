@@ -26,3 +26,8 @@ export const updateIssue = async ({ issueId, ...data }: UpdateIssueRequest) => {
     const res = await client.patch(`/issues/${issueId}`, data);
     return res.data;
 };
+
+export const getIssueComments = async (issueId: string) => {
+    const res = await client.get(`/issues/${issueId}/comments`);
+    return res.data;
+};

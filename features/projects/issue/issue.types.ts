@@ -45,3 +45,14 @@ export interface UpdateIssueRequest extends Partial<Issue> {
     issueId: string;
     updateEvent: UpdateIssueEvent;
 }
+
+export interface IssueComment {
+    id: string;
+    text: string;
+    photos: string[];
+    createdAt: string;
+    updatedAt: string;
+    authorId: string;
+    author: User;
+    issueId: string;
+}

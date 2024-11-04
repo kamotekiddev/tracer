@@ -6,6 +6,7 @@ import * as issueService from "./issueService";
 import * as userService from "@/features/services/userService";
 import {
     Issue,
+    IssueComment,
     IssueHistory,
     IssueWithProject,
     UpdateIssueRequest,
@@ -66,4 +67,10 @@ export const useUpdateIssue = () =>
                 queryKey: [QueryKeys.ISSUE_HISTORY],
             });
         },
+    });
+
+export const useGetIssueComments = (issueId: string) =>
+    useQuery<IssueComment[], AxiosError<ErrorResponse>>({
+        queryFn: () => issueService.getIssueComments(issueId),
+        queryKey: [QueryKeys.ISSUE_COMMENTS],
     });

@@ -8,6 +8,7 @@ export enum QueryKeys {
     PROJECT_CATEGORIES_WITH_ISSUES = "project_categories_with_issues",
     ISSUE = "issue",
     ISSUE_HISTORY = "issue_history",
+    ISSUE_COMMENTS = "issue_comments",
     USER = "user",
     CATEGORY = "category",
 }
