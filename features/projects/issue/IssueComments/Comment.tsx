@@ -55,7 +55,7 @@ function Comment({ comment }: Props) {
                         width={100}
                         height={100}
                         alt="Comment Photo"
-                        className="rounded-lg border object-contain"
+                        className="size-[100px] rounded-lg border object-contain"
                     />
                 ))}
             </div>
