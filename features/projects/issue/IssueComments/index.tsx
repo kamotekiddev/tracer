@@ -14,7 +14,7 @@ function IssueComments({ issueId }: Props) {
 
     return (
         <div className="space-y-4">
-            <CommentBar />
+            <CommentBar issueId={issueId} />
             <div className="grid gap-10">
                 {comments?.map((comment) => (
                     <Comment key={comment.id} comment={comment} />

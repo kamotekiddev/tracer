@@ -56,3 +56,7 @@ export interface IssueComment {
     author: User;
     issueId: string;
 }
+
+export type CommentIssueRequest = Pick<IssueComment, "text" | "issueId"> & {
+    photos: File[];
+};
