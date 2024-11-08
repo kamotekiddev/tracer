@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
+import CommentBar from "../projects/issue/IssueComments/CommentBar";
 
 function Home() {
-    return <div>Home</div>;
+    return <CommentBar issueId="" />;
 }
 
 export default Home;
