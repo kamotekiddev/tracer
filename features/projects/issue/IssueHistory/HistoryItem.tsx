@@ -29,7 +29,7 @@ const ActionMap: Record<UpdateIssueEvent, string> = {
 
 function UpdateInfo({ event, updaterName, updateDate }: UpdateInfoProps) {
     return (
-        <div className="gap-2">
+        <div>
             <div>
                 <span className="font-medium">{updaterName}</span> changed the{" "}
                 <span className="font-medium">{ActionMap[event]}</span>{" "}

@@ -11,6 +11,7 @@ import IssueDetails from "./IssueDetails";
 import IssueCategory from "./IssueCategory";
 import IssueTypeSelector from "./IssueType";
 import IssueHistory from "./IssueHistory";
+import IssueComments from "./IssueComments";
 
 interface Props {
     issueId: string;
@@ -70,7 +71,7 @@ function ViewIssueModal({ open, onClose, issueId }: Props) {
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="comments">
-                                {/* Comments will go here */}
+                                <IssueComments issueId={issue.id} />
                             </TabsContent>
                             <TabsContent value="history">
                                 <IssueHistory issueId={issue.id} />

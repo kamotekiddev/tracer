@@ -5,7 +5,9 @@ import { ErrorResponse } from "@/features/interfaces";
 import * as issueService from "./issueService";
 import * as userService from "@/features/services/userService";
 import {
+    CommentIssueRequest,
     Issue,
+    IssueComment,
     IssueHistory,
     IssueWithProject,
     UpdateIssueRequest,
@@ -64,6 +66,22 @@ export const useUpdateIssue = () =>
             });
             queryClient.invalidateQueries({
                 queryKey: [QueryKeys.ISSUE_HISTORY],
+            });
+        },
+    });
+
+export const useGetIssueComments = (issueId: string) =>
+    useQuery<IssueComment[], AxiosError<ErrorResponse>>({
+        queryFn: () => issueService.getIssueComments(issueId),
+        queryKey: [QueryKeys.ISSUE_COMMENTS],
+    });
+
+export const useComment = () =>
+    useMutation<IssueComment, AxiosError<ErrorResponse>, CommentIssueRequest>({
+        mutationFn: (data) => issueService.comment(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QueryKeys.ISSUE_COMMENTS],
             });
         },
     });
