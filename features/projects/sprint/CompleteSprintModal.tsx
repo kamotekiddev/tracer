@@ -29,8 +29,10 @@ function CompleteSprintModal({ sprintId }: Props) {
 
     const completeSprint = useMutation<any, AxiosError, string>({
         mutationFn: (projectId) => projectService.completeSprint(projectId),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: [QueryKeys.PROJECTS] }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [QueryKeys.PROJECTS] });
+            queryClient.invalidateQueries({ queryKey: [QueryKeys.PROJECT] });
+        },
     });
 
     const handleCompleteSprint = async () => {

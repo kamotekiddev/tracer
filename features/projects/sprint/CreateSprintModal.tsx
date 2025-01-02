@@ -48,8 +48,10 @@ function CreateSprintModal() {
 
     const createSprint = useMutation<any, AxiosError, CreateSprintRequest>({
         mutationFn: (data) => projectService.createSprint(data),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: [QueryKeys.PROJECTS] }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [QueryKeys.PROJECTS] });
+            queryClient.invalidateQueries({ queryKey: [QueryKeys.PROJECT] });
+        },
     });
 
     const form = useForm<CreateSprintSchemaType>({
