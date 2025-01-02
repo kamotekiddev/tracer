@@ -24,7 +24,7 @@ function IssueSprint({ issue, projectWithSprints }: Props) {
         if (!sprints || !projectKey) return [];
 
         return sprints.map((sprint) => ({
-            label: `${projectKey}-${sprint.number}`,
+            label: `${projectKey} Sprint ${sprint.number}`,
             value: sprint.id,
         }));
     }, [sprints, projectKey]);
@@ -41,9 +41,8 @@ function IssueSprint({ issue, projectWithSprints }: Props) {
             });
 
             toast({
-                title: "Update Failed",
-                description: "Something went wrong, Please try again alter",
-                variant: "destructive",
+                title: "Issue Updated",
+                description: "The issue sprint has been updated successfully.",
             });
         } catch (error) {
             if (isAxiosError<ErrorResponse>(error)) {
